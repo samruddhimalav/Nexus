@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusConsult — Global Strategic Consultancy</title>
+<!-- Google Fonts remain, but we'll replace all emojis with Font Awesome 6 (free) icons for a polished look -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================
+   ROOT VARIABLES (unchanged)
+===================================================== */
+:root {
+  --ink: #07090f;
+  --deep: #0d1120;
+  --card: #121827;
+  --card2: #1a2235;
+  --gold: #c9a64a;
+  --gold2: #f0ce78;
+  --gold-dim: rgba(201,166,74,.12);
+  --gold-b: rgba(201,166,74,.22);
+  --white: #ffffff;
+  --off: #f5f2ec;
+  --muted: rgba(255,255,255,.52);
+  --border: rgba(255,255,255,.07);
+  --green: #22c55e;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --orange: #f97316;
+  --purple: #a855f7;
+  --nav-h: 72px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--ink);color:var(--white);overflow-x:hidden;}
+
+/* =====================================================
+   VIEW SYSTEM (unchanged)
+===================================================== */
+.view{display:none;}
+.view.active{display:block;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* =====================================================
+   NAVIGATION (unchanged)
+===================================================== */
+#main-nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:var(--nav-h);display:flex;align-items:center;
+  justify-content:space-between;padding:0 5%;
+  background:rgba(7,9,15,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);transition:all .3s;
+}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--gold);cursor:pointer;letter-spacing:.5px;}
+.logo em{color:var(--white);font-style:normal;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.875rem;font-weight:500;cursor:pointer;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover,.nav-links a.on{color:var(--gold);}
+.nav-links a:hover::after,.nav-links a.on::after{transform:scaleX(1);}
+.nav-actions{display:flex;gap:.7rem;align-items:center;}
+.btn-xs{padding:8px 18px;border-radius:4px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;}
+.btn-ghost{background:transparent;border:1px solid var(--gold-b);color:var(--white);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-fill{background:var(--gold);border:1px solid var(--gold);color:var(--ink);}
+.btn-fill:hover{background:var(--gold2);}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.ham span{width:22px;height:2px;background:var(--white);display:block;transition:all .3s;}
+.mob-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:898;background:rgba(7,9,15,.98);padding:1rem 5%;border-bottom:1px solid var(--border);}
+.mob-nav.open{display:block;}
+.mob-nav a{display:block;padding:11px 0;color:rgba(255,255,255,.8);text-decoration:none;border-bottom:1px solid var(--border);cursor:pointer;font-size:.95rem;}
+
+/* =====================================================
+   BUTTONS (unchanged)
+===================================================== */
+.btn-primary{background:var(--gold);color:var(--ink);padding:13px 30px;border-radius:4px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;letter-spacing:.3px;}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,166,74,.3);}
+.btn-outline{background:transparent;color:var(--white);padding:13px 30px;border-radius:4px;font-weight:600;font-size:.9rem;border:1px solid rgba(255,255,255,.22);cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.btn-success{background:var(--green);color:var(--white);padding:13px 30px;border-radius:4px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;}
+.btn-success:hover{background:#16a34a;transform:translateY(-2px);}
+
+/* =====================================================
+   TYPOGRAPHY HELPERS (unchanged)
+===================================================== */
+.tag{font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:.8rem;}
+.headline{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.15;}
+.lead{color:var(--muted);line-height:1.8;font-size:.97rem;}
+
+/* =====================================================
+   SECTION (unchanged)
+===================================================== */
+.sec{padding:90px 5%;}
+.sec-center{text-align:center;max-width:700px;margin:0 auto 3.5rem;}
+
+/* =====================================================
+   CARDS (unchanged)
+===================================================== */
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto;}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.4rem;max-width:1200px;margin:0 auto;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:30px 26px;transition:all .3s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.card:hover{border-color:var(--gold-b);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.card:hover::before{transform:scaleX(1);}
+.card-icon{width:50px;height:50px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.1rem;}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;margin-bottom:.6rem;}
+.card p{color:var(--muted);font-size:.88rem;line-height:1.7;}
+.card-link{display:inline-flex;align-items:center;gap:5px;margin-top:1rem;font-size:.83rem;color:var(--gold);font-weight:600;cursor:pointer;transition:gap .2s;}
+.card-link:hover{gap:10px;}
+
+/* =====================================================
+   HERO (unchanged, except emoji replaced with FA)
+===================================================== */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 65% 45%,rgba(201,166,74,.07) 0%,transparent 55%),radial-gradient(ellipse at 15% 80%,rgba(59,130,246,.09) 0%,transparent 50%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold-b),transparent);}
+.hero-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;width:100%;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.hero-pill{display:inline-flex;align-items:center;gap:9px;background:var(--gold-dim);border:1px solid var(--gold-b);padding:7px 16px;border-radius:50px;font-size:.72rem;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;}
+.hero-pill::before{content:'';width:7px;height:7px;background:var(--gold);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;}
+.hero-title .gold{color:var(--gold);}
+.hero-desc{color:var(--muted);line-height:1.9;font-size:1rem;max-width:460px;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+.client-logos{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:1rem;}
+.client-logos span{font-size:.72rem;color:var(--muted);margin-right:4px;letter-spacing:1px;text-transform:uppercase;}
+.logo-pill{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.5);}
+.hero-visual{position:relative;}
+.hero-float-card{background:var(--card2);border:1px solid var(--gold-b);border-radius:14px;padding:24px;position:absolute;}
+.hero-float-card .hf-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--gold);}
+.hero-float-card .hf-label{font-size:.78rem;color:var(--muted);margin-top:3px;}
+.hero-main-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,rgba(201,166,74,.08) 0%,rgba(59,130,246,.1) 100%);border-radius:20px;border:1px solid var(--gold-b);display:flex;align-items:center;justify-content:center;font-size:7rem;position:relative;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.fu1{animation:fadeUp .6s ease both;}
+.fu2{animation:fadeUp .6s .1s ease both;}
+.fu3{animation:fadeUp .6s .2s ease both;}
+.fu4{animation:fadeUp .6s .3s ease both;}
+.fr{animation:fadeRight .7s .2s ease both;}
+
+/* =====================================================
+   STATS BAR (unchanged)
+===================================================== */
+.stats-bar{background:rgba(201,166,74,.05);border-top:1px solid var(--gold-b);border-bottom:1px solid var(--gold-b);padding:28px 5%;}
+.stats-row{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;}
+.stat-big{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;color:var(--gold);}
+.stat-lbl{color:var(--muted);font-size:.8rem;margin-top:2px;}
+
+/* =====================================================
+   CLIENT LOGOS SLIDER (unchanged)
+===================================================== */
+.logos-strip{overflow:hidden;padding:30px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);}
+.logos-track{display:flex;gap:40px;animation:scroll-logos 22s linear infinite;white-space:nowrap;}
+.logos-track:hover{animation-play-state:paused;}
+@keyframes scroll-logos{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.logo-item{display:inline-flex;align-items:center;justify-content:center;min-width:160px;height:50px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:0 20px;font-size:.82rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:1px;flex-shrink:0;}
+
+/* =====================================================
+   PROCESS STEPS (unchanged)
+===================================================== */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;max-width:1100px;margin:0 auto;position:relative;}
+.steps::before{content:'';position:absolute;top:34px;left:8%;right:8%;height:1px;background:linear-gradient(to right,transparent,var(--gold-b),transparent);}
+.step{text-align:center;padding:0 20px;}
+.step-n{width:68px;height:68px;border-radius:50%;background:var(--ink);border:1.5px solid var(--gold-b);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold);margin:0 auto 1.4rem;position:relative;z-index:1;}
+.step h4{font-size:.95rem;font-weight:700;margin-bottom:.45rem;}
+.step p{font-size:.82rem;color:var(--muted);line-height:1.6;}
+
+/* =====================================================
+   TESTIMONIALS (unchanged)
+===================================================== */
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .3s;}
+.t-card:hover{border-color:var(--gold-b);transform:translateY(-3px);}
+.stars{color:var(--gold);letter-spacing:2px;font-size:.88rem;margin-bottom:1rem;}
+.t-card q{font-size:.92rem;color:rgba(255,255,255,.78);line-height:1.75;font-style:italic;display:block;margin-bottom:1.4rem;}
+.t-meta{display:flex;align-items:center;gap:12px;}
+.t-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.88rem;color:var(--ink);flex-shrink:0;}
+.t-meta strong{display:block;font-size:.87rem;}
+.t-meta span{font-size:.77rem;color:var(--muted);}
+
+/* =====================================================
+   CASE STUDIES (unchanged)
+===================================================== */
+.cs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto;}
+.cs-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s;}
+.cs-card:hover{border-color:var(--gold-b);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.5);}
+.cs-img{height:200px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;}
+.cs-label{position:absolute;top:14px;left:14px;background:var(--gold);color:var(--ink);font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+.cs-body{padding:24px;}
+.cs-body h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem;}
+.cs-body p{font-size:.85rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;}
+.cs-stats{display:flex;gap:16px;}
+.cs-stat{text-align:center;}
+.cs-stat strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold);}
+.cs-stat span{font-size:.72rem;color:var(--muted);}
+
+/* =====================================================
+   WHITEPAPERS / REPORTS (unchanged)
+===================================================== */
+.wp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.4rem;max-width:1100px;margin:0 auto;}
+.wp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px;transition:all .3s;}
+.wp-card:hover{border-color:var(--gold-b);transform:translateY(-3px);}
+.wp-icon{width:52px;height:64px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:6px 6px 6px 0;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:1.1rem;position:relative;}
+.wp-icon::after{content:'PDF';position:absolute;bottom:-1px;right:-1px;background:var(--gold);color:var(--ink);font-size:.55rem;font-weight:800;padding:2px 5px;border-radius:2px;}
+.wp-card h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;}
+.wp-card p{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.wp-meta{font-size:.73rem;color:rgba(255,255,255,.35);margin-bottom:1rem;}
+.btn-dl{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:5px;font-size:.82rem;font-weight:600;color:var(--gold);cursor:pointer;transition:all .2s;}
+.btn-dl:hover{background:var(--gold);color:var(--ink);}
+
+/* =====================================================
+   NEWSLETTER (unchanged)
+===================================================== */
+.nl-band{background:linear-gradient(135deg,rgba(201,166,74,.1),rgba(59,130,246,.08));border-top:1px solid var(--gold-b);border-bottom:1px solid var(--gold-b);padding:60px 5%;text-align:center;}
+.nl-form{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:1.8rem;}
+.nl-input{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:5px;padding:13px 20px;color:var(--white);font-family:'Outfit',sans-serif;font-size:.9rem;outline:none;width:300px;transition:border-color .2s;}
+.nl-input:focus{border-color:var(--gold);}
+.nl-input::placeholder{color:var(--muted);}
+
+/* =====================================================
+   PRICING (unchanged)
+===================================================== */
+.pricing-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem;max-width:960px;margin:0 auto;}
+.p-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px 28px;text-align:center;position:relative;transition:all .3s;}
+.p-card.featured{background:rgba(201,166,74,.06);border-color:rgba(201,166,74,.4);transform:scale(1.04);}
+.p-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-size:.7rem;font-weight:800;letter-spacing:1px;padding:5px 16px;border-radius:50px;text-transform:uppercase;}
+.p-name{font-weight:700;font-size:.82rem;letter-spacing:1.5px;color:var(--muted);margin-bottom:1rem;text-transform:uppercase;}
+.p-price{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:var(--gold);}
+.p-price sup{font-size:1.2rem;vertical-align:top;margin-top:10px;display:inline-block;}
+.p-price sub{font-size:.9rem;color:var(--muted);}
+.p-features{list-style:none;margin:1.5rem 0;text-align:left;}
+.p-features li{padding:8px 0;font-size:.87rem;color:rgba(255,255,255,.7);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px;}
+.p-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+
+/* =====================================================
+   CONTACT FORM - ENHANCED (unchanged)
+===================================================== */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;max-width:1080px;margin:0 auto;align-items:start;}
+.c-info h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;margin-bottom:.8rem;}
+.c-info p{color:var(--muted);line-height:1.8;margin-bottom:1.8rem;}
+.c-det{display:flex;align-items:flex-start;gap:13px;padding:14px 0;border-bottom:1px solid var(--border);}
+.c-ico{width:38px;height:38px;border-radius:8px;background:var(--gold-dim);border:1px solid var(--gold-b);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.c-det strong{display:block;font-size:.83rem;}
+.c-det span{font-size:.8rem;color:var(--muted);}
+.c-form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;}
+.c-form h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:1.5rem;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fg{margin-bottom:1.1rem;}
+.fg label{display:block;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.65);margin-bottom:5px;letter-spacing:.5px;}
+.fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;padding:11px 14px;color:var(--white);font-family:'Outfit',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
+.fg textarea{resize:vertical;min-height:110px;}
+.fg select option{background:var(--deep);}
+.fg.error input,.fg.error select,.fg.error textarea{border-color:var(--red);}
+.error-message{color:var(--red);font-size:.7rem;margin-top:4px;display:block;}
+
+/* =====================================================
+   CALENDAR / BOOKING - ENHANCED (unchanged)
+===================================================== */
+.booking-section{margin-top:2rem;border-top:1px solid var(--border);padding-top:2rem;}
+.booking-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2rem;max-width:900px;margin:0 auto;}
+.cal-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px;}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.4rem;}
+.cal-head h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;}
+.cal-nav-btn{background:none;border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cal-nav-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+.cal-nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;}
+.cal-hdr{font-size:.68rem;font-weight:700;color:var(--muted);padding:5px 0;}
+.cal-d{padding:8px 3px;font-size:.8rem;border-radius:6px;cursor:pointer;transition:background .15s;}
+.cal-d:hover:not(.disabled){background:var(--gold-dim);color:var(--gold);}
+.cal-d.today{background:var(--gold);color:var(--ink);font-weight:700;}
+.cal-d.has-slot{position:relative;}
+.cal-d.has-slot::after{content:'';width:4px;height:4px;background:var(--green);border-radius:50%;position:absolute;bottom:2px;left:50%;transform:translateX(-50%);}
+.cal-d.selected{background:var(--gold-dim);border:2px solid var(--gold);color:var(--gold);font-weight:700;}
+.cal-d.disabled{opacity:0.3;cursor:not-allowed;}
+.cal-d.other{color:rgba(255,255,255,.2);}
+.slots-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px;}
+.slots-box h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:1rem;}
+.slots-list{max-height:300px;overflow-y:auto;padding-right:5px;}
+.slot{padding:12px 16px;border:1px solid var(--border);border-radius:8px;margin-bottom:.6rem;cursor:pointer;font-size:.86rem;display:flex;justify-content:space-between;align-items:center;transition:all .2s;}
+.slot:hover:not(.booked){background:var(--gold-dim);border-color:var(--gold-b);color:var(--gold);}
+.slot.selected{background:var(--gold-dim);border:2px solid var(--gold);color:var(--gold);}
+.slot.booked{opacity:0.5;cursor:not-allowed;background:rgba(239,68,68,.05);border-color:rgba(239,68,68,.2);}
+.slot-badge{font-size:.7rem;background:rgba(34,197,94,.12);color:var(--green);padding:2px 8px;border-radius:50px;}
+.slot-badge.booked{background:rgba(239,68,68,.12);color:var(--red);}
+.booking-confirmation{background:var(--card2);border:1px solid var(--gold-b);border-radius:12px;padding:20px;margin-top:1rem;}
+.booking-confirmation h5{font-family:'Cormorant Garamond',serif;font-size:1rem;margin-bottom:.8rem;}
+.booking-detail{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);}
+.booking-detail span:first-child{color:var(--muted);}
+.booking-detail span:last-child{color:var(--gold);font-weight:600;}
+
+/* =====================================================
+   FAQ (unchanged)
+===================================================== */
+.faq-list{max-width:780px;margin:0 auto;}
+.faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:.9rem;overflow:hidden;}
+.faq-q{width:100%;padding:18px 22px;background:rgba(255,255,255,.03);border:none;color:var(--white);font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:600;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s;}
+.faq-q:hover{background:rgba(201,166,74,.04);}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:transform .3s;flex-shrink:0;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a.open{max-height:200px;}
+.faq-a p{padding:0 22px 18px;font-size:.88rem;color:var(--muted);line-height:1.75;}
+
+/* =====================================================
+   FOOTER (unchanged)
+===================================================== */
+footer{background:rgba(0,0,0,.5);border-top:1px solid var(--border);padding:50px 5% 22px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto 2.5rem;}
+.f-brand p{color:rgba(255,255,255,.4);font-size:.85rem;line-height:1.7;margin-top:.9rem;max-width:240px;}
+.f-col h5{font-weight:700;font-size:.82rem;letter-spacing:1px;margin-bottom:.9rem;color:rgba(255,255,255,.88);text-transform:uppercase;}
+.f-col a{display:block;color:rgba(255,255,255,.42);text-decoration:none;font-size:.83rem;padding:3px 0;cursor:pointer;transition:color .2s;}
+.f-col a:hover{color:var(--gold);}
+.f-bottom{max-width:1200px;margin:0 auto;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.77rem;color:rgba(255,255,255,.28);}
+.socs{display:flex;gap:9px;}
+.soc{width:34px;height:34px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:all .2s;}
+.soc:hover{background:var(--gold-dim);border-color:var(--gold-b);}
+
+/* =====================================================
+   SERVICE DETAIL PAGES (unchanged)
+===================================================== */
+.svc-hero{padding:120px 5% 60px;background:linear-gradient(180deg,rgba(201,166,74,.05) 0%,transparent 60%);border-bottom:1px solid var(--border);}
+.svc-hero-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1200px;margin:0 auto;}
+.svc-icon-large{width:80px;height:80px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin-bottom:1.2rem;}
+.svc-hero-visual{background:linear-gradient(135deg,rgba(201,166,74,.06),rgba(59,130,246,.1));border:1px solid var(--gold-b);border-radius:16px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:6rem;}
+.feature-list{list-style:none;margin-top:1.5rem;}
+.feature-list li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem;color:rgba(255,255,255,.78);}
+.feature-list li .fi{color:var(--gold);font-size:.9rem;margin-top:2px;flex-shrink:0;}
+
+/* =====================================================
+   SCROLLABLE MODALS - CLEAN DESIGN (HIDDEN SCROLLBAR BUT FUNCTIONAL)
+===================================================== */
+
+/* Base modal styles with hidden scrollbar */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
+.modal-overlay.open{display:flex;}
+
+.modal {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  width: 90%;
+  position: relative;
+  animation: fadeUp .3s ease;
+  max-height: 85vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox - hide scrollbar */
+  -ms-overflow-style: none; /* IE/Edge - hide scrollbar */
+}
+
+.modal::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera - hide scrollbar */
+}
+
+/* Auth modal specific width */
+#authModal .modal {
+  max-width: 440px;
+  padding: 40px;
+}
+
+/* Registration modal specific styling */
+#regModal .modal {
+  max-width: 500px;
+  padding: 30px;
+}
+
+/* Application modal specific styling */
+.modal.application-modal {
+  max-width: 500px !important;
+  padding: 30px !important;
+}
+
+/* Payment modal specific styling */
+#payModal .modal {
+  max-width: 480px;
+  padding: 35px;
+}
+
+.modal h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:.4rem;}
+.modal p{color:var(--muted);font-size:.87rem;margin-bottom:1.8rem;}
+.modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;z-index:10;}
+.modal-close:hover{color:var(--white);}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.8rem;background:rgba(255,255,255,.05);padding:4px;border-radius:8px;}
+.tab-b{flex:1;padding:9px;border:none;background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:.86rem;font-weight:600;border-radius:6px;cursor:pointer;transition:all .2s;}
+.tab-b.on{background:var(--gold);color:var(--ink);}
+.mfooter{text-align:center;margin-top:1.2rem;font-size:.82rem;color:var(--muted);}
+.mfooter a{color:var(--gold);cursor:pointer;font-weight:600;}
+
+/* Admin code field styling */
+#loginAdminCodeField,
+#adminCodeField {
+    margin-bottom: 15px;
+}
+
+#loginAdminCodeField input,
+#adminCodeField input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 14px;
+    background: rgba(255,255,255,0.05);
+    color: var(--white);
+}
+
+#loginAdminCodeField input:focus,
+#adminCodeField input:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+/* Registration form specific */
+#regModal .fr2 {
+    gap: 8px;
+    margin-bottom: 0;
+}
+
+#regModal .fg {
+    margin-bottom: 12px;
+}
+
+/* Consent checkbox styling */
+.consent-checkbox {
+    padding: 12px;
+    margin: 15px 0;
+    background: rgba(255,255,255,.03);
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.consent-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.consent-checkbox label {
+    color: var(--muted);
+    vertical-align: middle;
+}
+
+.consent-checkbox a {
+    color: var(--gold);
+    text-decoration: none;
+}
+
+/* Payment modal specific */
+.pay-modal h2{font-family:'Cormorant Garamond',serif;}
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0;}
+.pay-method{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;cursor:pointer;transition:all .2s;font-size:.83rem;}
+.pay-method:hover,.pay-method.sel{background:var(--gold-dim);border-color:var(--gold-b);color:var(--gold);}
+.pay-method .pm-ico{font-size:1.5rem;display:block;margin-bottom:5px;}
+
+/* =====================================================
+   CAREER APPLICATION MODAL - MATCH CREATE ACCOUNT UI
+===================================================== */
+.modal.application-modal {
+  max-height: 85vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.modal.application-modal::-webkit-scrollbar {
+  display: none;
+}
+
+.application-modal h2 {
+  margin-bottom: 5px;
+}
+
+.application-modal .modal-subtext {
+  margin-bottom: 15px;
+  color: var(--muted);
+  font-size: .86rem;
+}
+
+.application-modal .application-role {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 12px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.application-modal .application-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gold-dim);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.application-modal .application-info h3 {
+    font-size: 1.08rem;
+    margin-bottom: 2px;
+}
+
+.application-modal .application-info p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.application-modal .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.application-modal .fg {
+    margin-bottom: 12px;
+}
+
+.application-modal label {
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+    display: block;
+    color: rgba(255,255,255,.65);
+}
+
+.application-modal input,
+.application-modal select,
+.application-modal textarea {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+}
+
+.application-modal input:focus,
+.application-modal select:focus,
+.application-modal textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.application-modal .consent-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.application-modal .consent-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.application-modal .consent-checkbox label {
+    display: inline;
+    margin-bottom: 0;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--muted);
+}
+
+.file-upload .btn-outline {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.85rem;
+}
+
+.file-name {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    color: var(--gold);
+}
+
+.error-message {
+    color: var(--red);
+    font-size: 0.7rem;
+    margin-top: 2px;
+    display: block;
+}
+
+.fg.error input,
+.fg.error select,
+.fg.error textarea {
+    border-color: var(--red);
+}
+
+/* =====================================================
+   LIVE CHAT (unchanged)
+===================================================== */
+.chat-bubble{position:fixed;bottom:24px;right:24px;z-index:1500;}
+.chat-btn{width:56px;height:56px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 8px 24px rgba(201,166,74,.4);transition:all .2s;}
+.chat-btn:hover{transform:scale(1.1);}
+.chat-window{position:absolute;bottom:68px;right:0;width:320px;background:var(--deep);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:none;box-shadow:0 24px 60px rgba(0,0,0,.6);}
+.chat-window.open{display:block;}
+.chat-header{background:var(--gold);padding:14px 16px;display:flex;align-items:center;gap:10px;}
+.chat-header .c-av{width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.chat-header h4{font-size:.9rem;font-weight:700;color:var(--ink);}
+.chat-header p{font-size:.73rem;color:rgba(7,9,15,.65);}
+.chat-header .close-chat{margin-left:auto;background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--ink);}
+.chat-body{height:250px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.chat-msg{max-width:80%;padding:10px 13px;border-radius:10px;font-size:.83rem;line-height:1.55;}
+.chat-msg.bot{background:rgba(255,255,255,.07);align-self:flex-start;border-radius:3px 10px 10px 10px;}
+.chat-msg.user{background:var(--gold-dim);border:1px solid var(--gold-b);align-self:flex-end;border-radius:10px 3px 10px 10px;color:var(--gold);}
+.chat-footer{padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;}
+.chat-footer input{flex:1;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--white);font-family:'Outfit',sans-serif;font-size:.83rem;outline:none;}
+.chat-footer input:focus{border-color:var(--gold);}
+.chat-footer button{background:var(--gold);border:none;border-radius:6px;width:34px;height:34px;cursor:pointer;font-size:1rem;color:var(--ink);}
+.chat-quick{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 10px;}
+.chat-quick button{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:50px;padding:5px 11px;font-size:.75rem;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;}
+.chat-quick button:hover{background:var(--gold-dim);border-color:var(--gold-b);color:var(--gold);}
+
+/* =====================================================
+   ANIM (unchanged)
+===================================================== */
+.anim{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+.anim.vis{opacity:1;transform:translateY(0);}
+
+/* =====================================================
+   CTA BAND (unchanged)
+===================================================== */
+.cta-band{margin:0 5% 60px;background:linear-gradient(135deg,rgba(201,166,74,.1),rgba(59,130,246,.08));border:1px solid var(--gold-b);border-radius:20px;padding:56px;text-align:center;}
+.cta-band h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3vw,2.8rem);font-weight:700;margin-bottom:.9rem;}
+.cta-band p{color:var(--muted);max-width:460px;margin:0 auto 2.4rem;line-height:1.8;}
+
+/* =====================================================
+   BLOG (unchanged)
+===================================================== */
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .3s;}
+.blog-card:hover{transform:translateY(-4px);border-color:var(--gold-b);}
+.blog-img{height:170px;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+.blog-body{padding:22px;}
+.btag{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:3px 9px;border-radius:3px;display:inline-block;margin-bottom:.75rem;}
+.blog-card h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.35;margin-bottom:.6rem;}
+.blog-card p{font-size:.83rem;color:var(--muted);line-height:1.6;}
+.blog-meta{font-size:.74rem;color:rgba(255,255,255,.3);margin-top:10px;}
+
+/* =====================================================
+   TEAM (unchanged)
+===================================================== */
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s;}
+.team-card:hover{transform:translateY(-4px);border-color:var(--gold-b);}
+.team-img{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
+.team-info{padding:18px;}
+.team-info strong{font-family:'Cormorant Garamond',serif;font-size:1.1rem;display:block;}
+.team-role{font-size:.76rem;color:var(--gold);font-weight:600;margin-top:3px;display:block;}
+.team-info p{font-size:.79rem;color:var(--muted);margin-top:7px;line-height:1.6;}
+
+/* =====================================================
+   CAREER (unchanged)
+===================================================== */
+.job-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px;transition:all .3s;}
+.job-card:hover{border-color:var(--gold-b);transform:translateY(-3px);}
+.j-type{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:3px 9px;border-radius:3px;margin-bottom:.9rem;}
+.job-card h3{font-family:'Cormorant Garamond',serif;font-size:1.12rem;margin-bottom:.45rem;}
+.j-dept{font-size:.8rem;color:var(--gold);font-weight:600;margin-bottom:.75rem;}
+.job-card p{font-size:.83rem;color:var(--muted);line-height:1.6;}
+
+/* =====================================================
+   RESPONSIVE (unchanged)
+===================================================== */
+@media(max-width:900px){
+  .nav-links,.nav-actions .btn-ghost{display:none;}
+  .ham{display:flex;}
+  .hero-wrap,.svc-hero-wrap,.contact-wrap{grid-template-columns:1fr;}
+  .hero-visual,.fr{display:none;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .fr2{grid-template-columns:1fr;}
+  .pricing-wrap{grid-template-columns:1fr;}
+  .p-card.featured{transform:none;}
+  .booking-wrap{grid-template-columns:1fr;}
+  .pay-methods{grid-template-columns:1fr 1fr;}
+  
+  .application-modal .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .application-role {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+<!-- =====================================================
+     AUTH MODALS - WITH CLEAN SCROLLABLE FORMS
+===================================================== -->
+
+<!-- Admin Login Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth('authModal')"><i class="fas fa-times"></i></button>
+    <h2>Welcome Back</h2>
+    <p>Sign in to access your account</p>
+    <div class="tabs" id="authTabs">
+      <button class="tab-b on" onclick="setRole('user',this)">Client Login</button>
+      <button class="tab-b" onclick="setRole('admin',this)">Admin Login</button>
+    </div>
+    <div class="fg">
+      <label><i class="far fa-envelope" style="margin-right:5px;"></i>Email</label>
+      <input type="email" id="loginEmail" placeholder="your@email.com">
+    </div>
+    <div class="fg">
+      <label><i class="fas fa-lock" style="margin-right:5px;"></i>Password</label>
+      <input type="password" id="loginPassword" placeholder="••••••••">
+    </div> 
+    <!-- Admin Code Field - Hidden by default, shown only when Admin tab is selected -->
+    <div class="fg" id="loginAdminCodeField" style="display: none;">
+      <label><i class="fas fa-shield-alt" style="margin-right:5px;"></i>Admin Code</label>
+      <input type="password" id="loginAdminCode" placeholder="Enter admin code (ADMIN123)">
+    </div>
+    <button class="btn-primary" style="width:100%;padding:13px;" onclick="doLogin()">Sign In →</button>
+    <div class="mfooter"><a onclick="switchReg()">Don't have an account? Register</a></div>
+  </div>
+</div>
+
+<!-- Clean Scrollable Registration Modal (Hidden Scrollbar) -->
+<div class="modal-overlay" id="regModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth('regModal')"><i class="fas fa-times"></i></button>
+    <h2 style="margin-bottom: 5px;">Create Account</h2>
+    <p style="margin-bottom: 15px;">Join 500+ businesses transforming with Nexus</p>
+    
+    <div class="tabs" id="regTabs" style="margin-bottom: 15px;">
+      <button class="tab-b on" onclick="setRegRole('client', this)">Register as Client</button>
+      <button class="tab-b" onclick="setRegRole('admin', this)">Register as Admin</button>
+    </div>
+    
+    <form id="registrationForm" onsubmit="event.preventDefault(); doRegister();">
+      <div class="fr2" style="gap: 8px;">
+        <div class="fg" id="field-reg-firstName">
+          <label>First Name *</label>
+          <input type="text" id="regFirstName" placeholder="John">
+          <span class="error-message" id="error-reg-firstName"></span>
+        </div>
+        <div class="fg" id="field-reg-lastName">
+          <label>Last Name *</label>
+          <input type="text" id="regLastName" placeholder="Smith">
+          <span class="error-message" id="error-reg-lastName"></span>
+        </div>
+      </div>
+      
+      <div class="fg" id="field-reg-email">
+        <label>Email *</label>
+        <input type="email" id="regEmail" placeholder="john@company.com">
+        <span class="error-message" id="error-reg-email"></span>
+      </div>
+      
+      <div class="fg" id="field-reg-company">
+        <label>Company *</label>
+        <input type="text" id="regCompany" placeholder="Acme Inc.">
+        <span class="error-message" id="error-reg-company"></span>
+      </div>
+      
+      <div class="fg" id="field-reg-phone">
+        <label>Phone *</label>
+        <input type="tel" id="regPhone" placeholder="+1 234 567 8900">
+        <span class="error-message" id="error-reg-phone"></span>
+      </div>
+      
+      <div class="fg" id="field-reg-password">
+        <label>Password *</label>
+        <input type="password" id="regPassword" placeholder="Create password (min. 6 chars)">
+        <span class="error-message" id="error-reg-password"></span>
+      </div>
+      
+      <!-- Admin Code Field - Hidden by default -->
+      <div class="fg" id="adminCodeField" style="display: none;">
+        <label>Admin Access Code *</label>
+        <input type="password" id="regAdminCode" placeholder="Enter admin code (ADMIN123)">
+        <span class="error-message" id="error-reg-adminCode"></span>
+      </div>
+      
+      <div class="consent-checkbox">
+        <input type="checkbox" id="regTerms">
+        <label for="regTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> *</label>
+        <span class="error-message" id="error-reg-terms"></span>
+      </div>
+      
+      <button type="submit" class="btn-primary" style="width:100%;padding:12px;" id="regSubmitBtn">Create Account →</button>
+    </form>
+    
+    <div class="mfooter" style="margin-top: 15px;">
+      <a onclick="switchLogin()">Already registered? Sign in</a>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal pay-modal">
+    <button class="modal-close" onclick="closeAuth('payModal')"><i class="fas fa-times"></i></button>
+    <h2>Complete Payment</h2>
+    <p>Choose your payment method</p>
+    <div style="background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:8px;padding:14px;margin-bottom:1.2rem;display:flex;justify-content:space-between;">
+      <span style="font-size:.87rem;">Growth Plan — Monthly</span>
+      <strong style="color:var(--gold);">$1,499.00</strong>
+    </div>
+    <div class="pay-methods">
+      <div class="pay-method sel" onclick="selPay(this)"><span class="pm-ico"><i class="fab fa-cc-stripe"></i></span>Stripe</div>
+      <div class="pay-method" onclick="selPay(this)"><span class="pm-ico"><i class="fas fa-university"></i></span>Razorpay</div>
+      <div class="pay-method" onclick="selPay(this)"><span class="pm-ico"><i class="fas fa-mobile-alt"></i></span>UPI</div>
+    </div>
+    <div class="fg"><label>Card Number</label><input type="text" placeholder="4242 4242 4242 4242"></div>
+    <div class="fr2"><div class="fg"><label>Expiry</label><input type="text" placeholder="MM/YY"></div><div class="fg"><label>CVV</label><input type="text" placeholder="•••"></div></div>
+    <button class="btn-primary" style="width:100%;padding:13px;" onclick="doPayment()">Pay Securely →</button>
+    <p style="text-align:center;font-size:.74rem;color:var(--muted);margin-top:.8rem;">🔒 256-bit SSL Encrypted · SOC 2 Compliant</p>
+  </div>
+</div>
+
+<!-- =====================================================
+     CAREER APPLICATION MODAL (CLEAN SCROLLABLE - HIDDEN SCROLLBAR)
+===================================================== -->
+<div class="modal-overlay" id="applicationModal">
+  <div class="modal application-modal">
+    <button class="modal-close" onclick="closeApplicationModal()"><i class="fas fa-times"></i></button>
+    <h2>Application Form</h2>
+    <p class="modal-subtext">Complete your details to apply for this role.</p>
+
+    <div class="application-role">
+      <div class="application-icon">
+        <i class="fas fa-briefcase" id="applicationIcon"></i>
+      </div>
+      <div class="application-info">
+        <h3 id="jobTitle">Senior Business Strategist</h3>
+        <p id="jobDepartment"><i class="fas fa-building"></i> Business Consultancy · New York / Remote</p>
+      </div>
+    </div>
+    
+    <form id="applicationForm" onsubmit="event.preventDefault(); submitApplication();">
+      <div class="form-row">
+        <div class="fg" id="field-app-firstName">
+          <label><i class="fas fa-user"></i> First Name *</label>
+          <input type="text" id="appFirstName" placeholder="John">
+          <span class="error-message" id="error-app-firstName"></span>
+        </div>
+        <div class="fg" id="field-app-lastName">
+          <label><i class="fas fa-user"></i> Last Name *</label>
+          <input type="text" id="appLastName" placeholder="Smith">
+          <span class="error-message" id="error-app-lastName"></span>
+        </div>
+      </div>
+      
+      <div class="fg" id="field-app-email">
+        <label><i class="fas fa-envelope"></i> Email Address *</label>
+        <input type="email" id="appEmail" placeholder="john.smith@email.com">
+        <span class="error-message" id="error-app-email"></span>
+      </div>
+      
+      <div class="form-row">
+        <div class="fg" id="field-app-phone">
+          <label><i class="fas fa-phone"></i> Phone *</label>
+          <input type="tel" id="appPhone" placeholder="+1 234 567 8900">
+          <span class="error-message" id="error-app-phone"></span>
+        </div>
+        <div class="fg" id="field-app-location">
+          <label><i class="fas fa-map-marker-alt"></i> Location *</label>
+          <input type="text" id="appLocation" placeholder="City, Country">
+          <span class="error-message" id="error-app-location"></span>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="fg" id="field-app-linkedin">
+          <label><i class="fab fa-linkedin"></i> LinkedIn (Optional)</label>
+          <input type="url" id="appLinkedin" placeholder="linkedin.com/in/username">
+        </div>
+        <div class="fg" id="field-app-portfolio">
+          <label><i class="fas fa-link"></i> Portfolio (Optional)</label>
+          <input type="url" id="appPortfolio" placeholder="yourportfolio.com">
+        </div>
+      </div>
+      
+      <div class="fg" id="field-app-experience">
+        <label><i class="fas fa-briefcase"></i> Years of Experience *</label>
+        <select id="appExperience">
+          <option value="">Select experience...</option>
+          <option value="0-2">0-2 years</option>
+          <option value="3-5">3-5 years</option>
+          <option value="6-8">6-8 years</option>
+          <option value="9-12">9-12 years</option>
+          <option value="13+">13+ years</option>
+        </select>
+        <span class="error-message" id="error-app-experience"></span>
+      </div>
+      
+      <div class="fg" id="field-app-cover">
+        <label><i class="fas fa-file-alt"></i> Cover Letter *</label>
+        <textarea id="appCover" rows="3" placeholder="Why you're the perfect candidate..."></textarea>
+        <span class="error-message" id="error-app-cover"></span>
+      </div>
+      
+      <div class="file-upload">
+        <input type="file" id="appResume" accept=".pdf,.doc,.docx" style="display:none;">
+        <button type="button" class="btn-outline" onclick="document.getElementById('appResume').click()" style="width:100%;">
+          <i class="fas fa-cloud-upload-alt"></i> <span id="resumeLabel">Upload Resume/CV *</span>
+        </button>
+        <div id="fileName" class="file-name"></div>
+        <span class="error-message" id="error-app-resume"></span>
+      </div>
+      
+      <div class="consent-checkbox" style="padding: 10px; margin: 10px 0;">
+        <input type="checkbox" id="appConsent">
+        <label for="appConsent">I agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms</a> *</label>
+        <span class="error-message" id="error-app-consent"></span>
+      </div>
+      
+      <div style="display:flex; gap:10px; margin-top: 10px;">
+        <button type="button" class="btn-outline" style="flex:1; padding: 10px;" onclick="closeApplicationModal()">Cancel</button>
+        <button type="submit" class="btn-primary" style="flex:1; padding: 10px;" id="submitAppBtn"><i class="fas fa-paper-plane"></i> Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- =====================================================
+     LIVE CHAT WIDGET (unchanged)
+===================================================== -->
+<div class="chat-bubble" id="chatBubble">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="c-av"><i class="fas fa-robot"></i></div>
+      <div><h4>Nexus AI Assistant</h4><p>Typically replies instantly</p></div>
+      <button class="close-chat" onclick="toggleChat()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-msg bot"><i class="fas fa-hand-wave" style="margin-right:5px;"></i>Hi! I'm the Nexus AI assistant. How can I help you today?</div>
+      <div class="chat-msg bot">I can help you with: service info, pricing, booking consultations, or connecting you with an expert.</div>
+    </div>
+    <div class="chat-quick">
+      <button onclick="chatQuick('What services do you offer?')"><i class="fas fa-cogs"></i> Services</button>
+      <button onclick="chatQuick('What are your pricing plans?')"><i class="fas fa-tag"></i> Pricing</button>
+      <button onclick="chatQuick('Book a consultation')"><i class="fas fa-calendar-check"></i> Book Call</button>
+      <button onclick="chatQuick('Talk to a human')"><i class="fas fa-headset"></i> Human Agent</button>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="toggleChat()" title="Chat with us"><i class="fas fa-comment-dots"></i></button>
+</div>
+
+<!-- =====================================================
+     NAVIGATION (unchanged)
+===================================================== -->
+<nav id="main-nav">
+  <div class="logo" onclick="goPage('home')">Nexus<em>Consult</em></div>
+  <ul class="nav-links">
+    <li><a onclick="goPage('home')" id="nl-home" class="on">Home</a></li>
+    <li><a onclick="goPage('about')" id="nl-about">About</a></li>
+    <li><a onclick="goPage('services')" id="nl-services">Services</a></li>
+    <li><a onclick="goPage('team')" id="nl-team">Team</a></li>
+    <li><a onclick="goPage('insights')" id="nl-insights">Insights</a></li>
+    <li><a onclick="goPage('pricing')" id="nl-pricing">Pricing</a></li>
+    <li><a onclick="goPage('careers')" id="nl-careers">Careers</a></li>
+    <li><a onclick="goPage('contact')" id="nl-contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-xs btn-ghost" onclick="openAuth()"><i class="fas fa-sign-in-alt" style="margin-right:5px;"></i>Sign In</button>
+    <button class="btn-xs btn-fill" onclick="switchReg()"><i class="fas fa-user-plus" style="margin-right:5px;"></i>Get Started</button>
+  </div>
+  <button class="ham" onclick="document.getElementById('mobNav').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mob-nav" id="mobNav">
+  <a onclick="goPage('home');closeMob()"><i class="fas fa-home" style="margin-right:8px;"></i>Home</a>
+  <a onclick="goPage('services');closeMob()"><i class="fas fa-cogs" style="margin-right:8px;"></i>Services</a>
+  <a onclick="goPage('case-studies');closeMob()"><i class="fas fa-chart-line" style="margin-right:8px;"></i>Case Studies</a>
+  <a onclick="goPage('pricing');closeMob()"><i class="fas fa-tag" style="margin-right:8px;"></i>Pricing</a>
+  <a onclick="goPage('insights');closeMob()"><i class="fas fa-lightbulb" style="margin-right:8px;"></i>Insights</a>
+  <a onclick="goPage('contact');closeMob()"><i class="fas fa-envelope" style="margin-right:8px;"></i>Contact</a>
+  <a onclick="openAuth()"><i class="fas fa-sign-in-alt" style="margin-right:8px;"></i>Sign In</a>
+</div>
+
+<!-- =====================================================
+     PUBLIC SITE VIEW (all pages remain the same as your original)
+===================================================== -->
+<div id="view-site" class="view active">
+
+<!-- ================= HOME PAGE (all emoji → FA) ================= -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-wrap">
+      <div>
+        <div class="hero-pill fu1"><i class="fas fa-globe" style="margin-right:5px;"></i> Global Strategic Consultancy</div>
+        <h1 class="hero-title fu2">We Turn <span class="gold">Complex</span><br>Into <span class="gold">Competitive</span></h1>
+        <p class="hero-desc fu3">Nexus partners with growth-oriented organizations to solve business, digital, and technology challenges — delivering measurable results across 40+ countries.</p>
+        <div class="hero-btns fu4">
+          <button class="btn-primary" onclick="goPage('contact')"><i class="fas fa-calendar-alt" style="margin-right:8px;"></i>Free Consultation</button>
+          <button class="btn-outline" onclick="goPage('case-studies')"><i class="fas fa-briefcase" style="margin-right:8px;"></i>View Case Studies</button>
+        </div>
+        <div class="client-logos fu4">
+          <span>Trusted by</span>
+          <div class="logo-pill"><i class="fas fa-check-circle" style="color:var(--gold); margin-right:5px;"></i>McKinsey Alumni</div>
+          <div class="logo-pill"><i class="fas fa-check-circle" style="color:var(--gold); margin-right:5px;"></i>BCG Partners</div>
+          <div class="logo-pill"><i class="fas fa-check-circle" style="color:var(--gold); margin-right:5px;"></i>Fortune 500</div>
+        </div>
+      </div>
+      <div class="hero-visual fr">
+        <div class="hero-main-img"><i class="fas fa-landmark" style="font-size:7rem; color:var(--gold);"></i>
+          <div class="hero-float-card" style="top:20px;right:-20px;width:160px;">
+            <div class="hf-num">500+</div>
+            <div class="hf-label"><i class="fas fa-rocket" style="margin-right:3px;"></i>Projects Delivered</div>
+          </div>
+          <div class="hero-float-card" style="bottom:20px;left:-20px;width:145px;">
+            <div class="hf-num">98%</div>
+            <div class="hf-label"><i class="fas fa-smile" style="margin-right:3px;"></i>Client Satisfaction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Logos Slider -->
+  <div class="logos-strip">
+    <div class="logos-track">
+      <div class="logo-item"><i class="fas fa-building" style="margin-right:8px;"></i>TechFlow Inc.</div>
+      <div class="logo-item"><i class="fas fa-store" style="margin-right:8px;"></i>GlobalRetail Co.</div>
+      <div class="logo-item"><i class="fas fa-crown" style="margin-right:8px;"></i>Pinnacle Corp</div>
+      <div class="logo-item"><i class="fas fa-capsules" style="margin-right:8px;"></i>BrightMeds</div>
+      <div class="logo-item"><i class="fas fa-cloud" style="margin-right:8px;"></i>CloudFirst</div>
+      <div class="logo-item"><i class="fas fa-hard-hat" style="margin-right:8px;"></i>NovaBuild</div>
+      <div class="logo-item"><i class="fas fa-chart-pie" style="margin-right:8px;"></i>AlphaVentures</div>
+      <div class="logo-item"><i class="fas fa-microchip" style="margin-right:8px;"></i>FutureTech</div>
+      <div class="logo-item"><i class="fas fa-omega" style="margin-right:8px;"></i>OmegaGroup</div>
+      <div class="logo-item"><i class="fas fa-sun" style="margin-right:8px;"></i>ZenithCorp</div>
+      <!-- duplicate for infinite scroll effect -->
+      <div class="logo-item"><i class="fas fa-building" style="margin-right:8px;"></i>TechFlow Inc.</div>
+      <div class="logo-item"><i class="fas fa-store" style="margin-right:8px;"></i>GlobalRetail Co.</div>
+      <div class="logo-item"><i class="fas fa-crown" style="margin-right:8px;"></i>Pinnacle Corp</div>
+      <div class="logo-item"><i class="fas fa-capsules" style="margin-right:8px;"></i>BrightMeds</div>
+      <div class="logo-item"><i class="fas fa-cloud" style="margin-right:8px;"></i>CloudFirst</div>
+      <div class="logo-item"><i class="fas fa-hard-hat" style="margin-right:8px;"></i>NovaBuild</div>
+      <div class="logo-item"><i class="fas fa-chart-pie" style="margin-right:8px;"></i>AlphaVentures</div>
+      <div class="logo-item"><i class="fas fa-microchip" style="margin-right:8px;"></i>FutureTech</div>
+      <div class="logo-item"><i class="fas fa-omega" style="margin-right:8px;"></i>OmegaGroup</div>
+      <div class="logo-item"><i class="fas fa-sun" style="margin-right:8px;"></i>ZenithCorp</div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stats-row">
+      <div><div class="stat-big">500+</div><div class="stat-lbl"><i class="fas fa-project-diagram" style="margin-right:5px;"></i>Projects Delivered</div></div>
+      <div><div class="stat-big">98%</div><div class="stat-lbl"><i class="fas fa-heart" style="margin-right:5px;"></i>Client Retention</div></div>
+      <div><div class="stat-big">120+</div><div class="stat-lbl"><i class="fas fa-users" style="margin-right:5px;"></i>Expert Consultants</div></div>
+      <div><div class="stat-big">40+</div><div class="stat-lbl"><i class="fas fa-map-marker-alt" style="margin-right:5px;"></i>Countries Served</div></div>
+    </div>
+  </div>
+
+  <!-- Process -->
+  <section class="sec" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="sec-center"><span class="tag">Our Approach</span><h2 class="headline">How We Work</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-n"><i class="fas fa-search"></i></div><h4>Discovery</h4><p>Deep dive into your challenges through stakeholder interviews and data analysis.</p></div>
+      <div class="step"><div class="step-n"><i class="fas fa-draw-polygon"></i></div><h4>Strategy</h4><p>Tailored roadmap with clear objectives, timelines, and measurable KPIs.</p></div>
+      <div class="step"><div class="step-n"><i class="fas fa-cogs"></i></div><h4>Execution</h4><p>Agile implementation with continuous monitoring and adaptive adjustments.</p></div>
+      <div class="step"><div class="step-n"><i class="fas fa-chart-bar"></i></div><h4>Optimize</h4><p>Measure, iterate, and scale for sustainable long-term growth.</p></div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="sec" style="background:rgba(201,166,74,.03);border-top:1px solid var(--gold-b);border-bottom:1px solid var(--gold-b);">
+    <div class="sec-center"><span class="tag">Client Voice</span><h2 class="headline">What Our Clients Say</h2></div>
+    <div class="grid-3">
+      <div class="t-card anim"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><q>Nexus transformed our digital presence. The web team increased conversions by 340% in just 3 months. Truly world-class.</q><div class="t-meta"><div class="t-av"><i class="fas fa-user-tie"></i></div><div><strong>Aiden Richards</strong><span>CEO, TechFlow Inc.</span></div></div></div>
+      <div class="t-card anim"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><q>The IT consultancy helped us migrate to cloud with zero downtime and 60% cost reduction. I can't imagine a better partner.</q><div class="t-meta"><div class="t-av"><i class="fas fa-user-tie"></i></div><div><strong>Sophia Martinez</strong><span>CTO, GlobalRetail Co.</span></div></div></div>
+      <div class="t-card anim"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><q>Their career guidance program helped 85% of our employees hit professional goals within the year. Genuinely transformative.</q><div class="t-meta"><div class="t-av"><i class="fas fa-user-tie"></i></div><div><strong>James Kwon</strong><span>HR Director, Pinnacle Corp</span></div></div></div>
+    </div>
+  </section>
+
+  <!-- Whitepapers / Downloads -->
+  <section class="sec">
+    <div class="sec-center"><span class="tag">Research & Insights</span><h2 class="headline">Reports & Whitepapers</h2><p class="lead" style="margin-top:.8rem;">Download our latest research to stay ahead of the curve.</p></div>
+    <div class="wp-grid">
+      <div class="wp-card anim"><div class="wp-icon"><i class="fas fa-file-pdf"></i></div><div class="wp-meta">January 2025 · 48 pages</div><h4>The State of Digital Transformation 2025</h4><p>Key trends, challenges, and opportunities shaping enterprise digital transformation globally.</p><div class="btn-dl" onclick="downloadBrochure('Digital Transformation Report 2025')"><i class="fas fa-download"></i> Download Free</div></div>
+      <div class="wp-card anim"><div class="wp-icon"><i class="fas fa-chart-simple"></i></div><div class="wp-meta">December 2024 · 32 pages</div><h4>AI Readiness Index: Enterprise Edition</h4><p>How 500 organizations are preparing for AI — and what separates leaders from laggards.</p><div class="btn-dl" onclick="downloadBrochure('AI Readiness Index 2024')"><i class="fas fa-download"></i> Download Free</div></div>
+      <div class="wp-card anim"><div class="wp-icon"><i class="fas fa-shield-alt"></i></div><div class="wp-meta">November 2024 · 28 pages</div><h4>Zero Trust Security Framework Guide</h4><p>A practical implementation guide for enterprise cybersecurity modernization.</p><div class="btn-dl" onclick="downloadBrochure('Zero Trust Framework Guide')"><i class="fas fa-download"></i> Download Free</div></div>
+      <div class="wp-card anim"><div class="wp-icon"><i class="fas fa-bullseye"></i></div><div class="wp-meta">October 2024 · 24 pages</div><h4>Career Transformation Playbook 2025</h4><p>Strategic frameworks for organizations building high-performance talent pipelines.</p><div class="btn-dl" onclick="downloadBrochure('Career Transformation Playbook')"><i class="fas fa-download"></i> Download Free</div></div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <div class="nl-band">
+    <span class="tag" style="display:block;"><i class="fas fa-newspaper" style="margin-right:5px;"></i>Stay Informed</span>
+    <h2 class="headline">Get Expert Insights Delivered Weekly</h2>
+    <p class="lead" style="max-width:460px;margin:.8rem auto 0;">Join 12,000+ business leaders who receive our strategy briefings, research reports, and industry analysis every week.</p>
+    <div class="nl-form">
+      <input type="email" class="nl-input" placeholder="Enter your business email" id="nlEmail">
+      <button class="btn-primary" onclick="subscribeNewsletter()"><i class="fas fa-paper-plane" style="margin-right:8px;"></i>Subscribe Free →</button>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-top:.8rem;">No spam. Unsubscribe anytime. Read by leaders at McKinsey, BCG, Deloitte & more.</p>
+  </div>
+
+  <!-- CTA Band -->
+  <div class="cta-band"><h2>Ready to Transform Your Business?</h2><p>Book a free 30-minute consultation and discover how Nexus accelerates growth.</p><button class="btn-primary" onclick="goPage('contact')" style="padding:14px 36px;"><i class="fas fa-calendar-alt" style="margin-right:8px;"></i>Book Free Consultation</button></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="f-brand"><div class="logo">Nexus<em>Consult</em></div><p>Transforming businesses through strategic consultancy, innovation, and expert execution since 2009.</p><div class="socs" style="margin-top:1.1rem;"><div class="soc"><i class="fab fa-linkedin-in"></i></div><div class="soc"><i class="fab fa-x-twitter"></i></div><div class="soc"><i class="fab fa-facebook-f"></i></div><div class="soc"><i class="fab fa-youtube"></i></div></div></div>
+      <div class="f-col"><h5>Services</h5><a onclick="goServiceDetail('web')"><i class="fas fa-globe" style="margin-right:6px;"></i>Web Development</a><a onclick="goServiceDetail('marketing')"><i class="fas fa-chart-line" style="margin-right:6px;"></i>Digital Marketing</a><a onclick="goServiceDetail('business')"><i class="fas fa-briefcase" style="margin-right:6px;"></i>Business Consulting</a><a onclick="goServiceDetail('it')"><i class="fas fa-laptop-code" style="margin-right:6px;"></i>IT Consultancy</a><a onclick="goServiceDetail('career')"><i class="fas fa-bullseye" style="margin-right:6px;"></i>Career Guidance</a><a onclick="goServiceDetail('finance')"><i class="fas fa-coins" style="margin-right:6px;"></i>Financial Advisory</a></div>
+      <div class="f-col"><h5>Company</h5><a onclick="goPage('about')"><i class="fas fa-info-circle" style="margin-right:6px;"></i>About Us</a><a onclick="goPage('team')"><i class="fas fa-users" style="margin-right:6px;"></i>Our Team</a><a onclick="goPage('case-studies')"><i class="fas fa-chart-bar" style="margin-right:6px;"></i>Case Studies</a><a onclick="goPage('insights')"><i class="fas fa-lightbulb" style="margin-right:6px;"></i>Insights</a><a onclick="goPage('careers')"><i class="fas fa-briefcase" style="margin-right:6px;"></i>Careers</a></div>
+      <div class="f-col"><h5>Resources</h5><a onclick="goPage('pricing')"><i class="fas fa-tag" style="margin-right:6px;"></i>Pricing</a><a onclick="goPage('contact')"><i class="fas fa-envelope" style="margin-right:6px;"></i>Contact</a><a><i class="fas fa-file-alt" style="margin-right:6px;"></i>Whitepapers</a><a><i class="fas fa-lock" style="margin-right:6px;"></i>Privacy Policy</a><a><i class="fas fa-file-contract" style="margin-right:6px;"></i>Terms of Service</a><a><i class="fas fa-cookie-bite" style="margin-right:6px;"></i>Cookie Policy</a></div>
+    </div>
+    <div class="f-bottom"><span>© 2025 NexusConsult Ltd. All rights reserved.</span><span><i class="fas fa-star" style="color:var(--gold);"></i> Excellence. Always.</span></div>
+  </footer>
+</div>
+
+<!-- ================= ABOUT PAGE ================= -->
+<div id="page-about" class="page">
+  <section class="sec" style="padding-top:110px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto;">
+      <div><span class="tag"><i class="fas fa-info-circle" style="margin-right:5px;"></i> About Nexus</span><h2 class="headline">15 Years Transforming Businesses Globally</h2><p class="lead" style="margin-top:.9rem;">Founded in 2009, Nexus began with a simple belief: every business deserves world-class strategic guidance. Today we're a global team of 120+ experts across 40+ countries solving the most complex challenges.</p><ul class="feature-list" style="margin-top:1.5rem;"><li><span class="fi"><i class="fas fa-bullseye" style="color:var(--gold);"></i></span><span><strong>Mission:</strong> Empower organizations to achieve their highest potential through strategic clarity.</span></li><li><span class="fi"><i class="fas fa-eye" style="color:var(--gold);"></i></span><span><strong>Vision:</strong> A world where every business has access to transformative consultancy.</span></li><li><span class="fi"><i class="fas fa-heart" style="color:var(--gold);"></i></span><span><strong>Values:</strong> Integrity, Innovation, Excellence, Inclusivity, Impact.</span></li></ul></div>
+      <div style="background:linear-gradient(135deg,rgba(201,166,74,.08),rgba(59,130,246,.12));border:1px solid var(--gold-b);border-radius:16px;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:6rem;position:relative;"><i class="fas fa-landmark" style="color:var(--gold);"></i><div style="position:absolute;bottom:-18px;right:-18px;background:var(--gold);color:var(--ink);padding:16px 20px;border-radius:10px;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.82rem;text-align:center;line-height:1.3;"><span style="font-size:2rem;display:block;">15+</span><i class="fas fa-calendar-alt" style="margin-right:3px;"></i>Years of Excellence</div></div>
+    </div>
+  </section>
+  <section class="sec" style="background:rgba(255,255,255,.02);border-top:1px solid var(--border);">
+    <div class="sec-center"><span class="tag"><i class="fas fa-gem" style="margin-right:5px;"></i> Our Principles</span><h2 class="headline">What Sets Us Apart</h2></div>
+    <div class="grid-4">
+      <div class="card"><div class="card-icon"><i class="fas fa-bullseye"></i></div><h3>Results-Driven</h3><p>We measure success by tangible outcomes, not just deliverables.</p></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-handshake"></i></div><h3>True Partnership</h3><p>We embed ourselves in your team, working as an extension of your organization.</p></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-flask"></i></div><h3>Evidence-Based</h3><p>Every recommendation is backed by rigorous data analysis and proven frameworks.</p></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-seedling"></i></div><h3>Long-term Impact</h3><p>We build capabilities within your organization so success continues after our engagement.</p></div>
+    </div>
+  </section>
+  <div class="cta-band"><h2>Our Story Is Your Success Story</h2><p>Let's write the next chapter together.</p><button class="btn-primary" onclick="goPage('contact')"><i class="fas fa-pen" style="margin-right:8px;"></i>Get In Touch</button></div>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= SERVICES PAGE ================= -->
+<div id="page-services" class="page">
+ <section class="sec" style="padding-top:110px;">
+    <div class="sec-center"><span class="tag"><i class="fas fa-cogs" style="margin-right:5px;"></i> Our Services</span><h2 class="headline">Expert Consultancy Across Every Domain</h2></div>
+    <div class="grid-3" style="max-width:1200px;margin:0 auto;">
+      <div class="card"><div class="card-icon"><i class="fas fa-globe"></i></div><h3>Web Development</h3><p>Custom apps, e-commerce, SaaS, PWA, UI/UX, performance optimization, and maintenance.</p><div class="card-link" onclick="goServiceDetail('web')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-chart-line"></i></div><h3>Digital Marketing</h3><p>SEO, PPC, social media, content marketing, email automation, analytics and CRO.</p><div class="card-link" onclick="goServiceDetail('marketing')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-network-wired"></i></div><h3>Networking</h3><p>Network architecture, SD-WAN, Wi-Fi design, infrastructure audit, routing and switching optimization.</p><div class="card-link" onclick="goServiceDetail('networking')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-shield-haltered"></i></div><h3>Cyber Security</h3><p>Threat modeling, penetration testing, zero-trust implementation, incident response and compliance.</p><div class="card-link" onclick="goServiceDetail('cyber')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-cloud-upload-alt"></i></div><h3>Cloud Computing</h3><p>AWS/Azure/GCP architecture, migration, serverless, cost optimization, hybrid cloud and containerization.</p><div class="card-link" onclick="goServiceDetail('cloud')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-database"></i></div><h3>Data Analytics</h3><p>Business intelligence, data warehousing, real-time dashboards, predictive analytics and data governance.</p><div class="card-link" onclick="goServiceDetail('data')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-robot"></i></div><h3>AI & Machine Learning</h3><p>Custom model development, NLP, computer vision, MLOps, AI strategy and intelligent automation.</p><div class="card-link" onclick="goServiceDetail('ai')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fab fa-android"></i></div><h3>Android Application</h3><p>Native Kotlin/Java apps, cross-platform, Google Play publishing, UI/UX and ongoing support.</p><div class="card-link" onclick="goServiceDetail('android')">Learn More →</div></div>
+      <div class="card"><div class="card-icon"><i class="fas fa-vial"></i></div><h3>Software Testing</h3><p>Automated testing, performance and load testing, security testing, QA strategy and CI/CD integration.</p><div class="card-link" onclick="goServiceDetail('testing')">Learn More →</div></div>
+    </div>
+  </section>
+  <div class="cta-band"><h2>Not Sure Which Service You Need?</h2><p>Book a free discovery call and our experts will map the perfect package.</p><button class="btn-primary" onclick="goPage('contact')"><i class="fas fa-phone-alt" style="margin-right:8px;"></i>Book Discovery Call</button></div>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= SERVICE DETAIL PAGE ================= -->
+<div id="page-service-detail" class="page">
+  <div class="svc-hero">
+    <div class="svc-hero-wrap">
+      <div>
+        <div class="svc-icon-large" id="svc-icon"><i class="fas fa-globe"></i></div>
+        <span class="tag" id="svc-tag">Web Development</span>
+        <h1 class="headline" id="svc-title">Web Development</h1>
+        <p class="lead" id="svc-desc" style="margin-top:.8rem;">End-to-end web solutions from architecture to deployment.</p>
+        <ul class="feature-list" id="svc-features"></ul>
+        <div style="display:flex;gap:1rem;margin-top:1.8rem;flex-wrap:wrap;">
+          <button class="btn-primary" onclick="goPage('contact')"><i class="fas fa-paper-plane" style="margin-right:8px;"></i>Get a Free Quote</button>
+          <button class="btn-outline" onclick="goPage('case-studies')"><i class="fas fa-briefcase" style="margin-right:8px;"></i>View Case Studies</button>
+        </div>
+      </div>
+      <div class="svc-hero-visual" id="svc-visual"><i class="fas fa-globe" style="font-size:6rem;"></i></div>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="sec-center"><span class="tag"><i class="fas fa-arrows-spin" style="margin-right:5px;"></i> Our Process</span><h2 class="headline">How We Deliver This Service</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-n"><i class="fas fa-search"></i></div><h4>Discovery</h4><p>Deep understanding of your specific goals and requirements.</p></div>
+      <div class="step"><div class="step-n"><i class="fas fa-draw-polygon"></i></div><h4>Planning</h4><p>Detailed project plan, resource allocation, and milestone setting.</p></div>
+      <div class="step"><div class="step-n"><i class="fas fa-cogs"></i></div><h4>Execution</h4><p>Expert delivery with regular updates and transparent communication.</p></div>
+      <div class="step"><div class="step-n"><i class="fas fa-chart-bar"></i></div><h4>Results</h4><p>Measurable outcomes reviewed against agreed KPIs and goals.</p></div>
+    </div>
+  </section>
+  <div class="cta-band"><h2>Ready to Get Started?</h2><p>Schedule a free consultation with our specialist team today.</p><button class="btn-primary" onclick="goPage('contact')"><i class="fas fa-calendar-check" style="margin-right:8px;"></i>Book Free Consultation</button></div>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= TEAM PAGE ================= -->
+<div id="page-team" class="page">
+  <section class="sec" style="padding-top:110px;">
+    <div class="sec-center"><span class="tag"><i class="fas fa-users" style="margin-right:5px;"></i> The People</span><h2 class="headline">Meet Our Expert Team</h2><p class="lead" style="margin-top:.8rem;">120+ world-class consultants, strategists, technologists, and coaches.</p></div>
+    <div class="grid-4">
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(201,166,74,.1),rgba(59,130,246,.12));"><i class="fas fa-user-tie" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Jonathan Mercer</strong><span class="team-role">CEO & Founder</span><p>20+ years in global strategy. Former McKinsey partner. Harvard MBA.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(168,85,247,.1));"><i class="fas fa-user-ninja" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Elena Vasquez</strong><span class="team-role">Chief Technology Officer</span><p>Ex-Google engineer. Expert in cloud architecture and enterprise systems.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(59,130,246,.1));"><i class="fas fa-user-graduate" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Marcus Chen</strong><span class="team-role">Head of Digital Marketing</span><p>Grew 50+ brands to 8-figure revenues through data-driven campaigns.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(168,85,247,.1),rgba(236,72,153,.1));"><i class="fas fa-user-md" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Dr. Amara Osei</strong><span class="team-role">Career Development Lead</span><p>PhD Organizational Psychology. Executive coach with 1,000+ clients.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(201,166,74,.1));"><i class="fas fa-user-cog" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Raj Patel</strong><span class="team-role">Head of IT Consultancy</span><p>AWS Solution Architect. Led digital transformation for 30+ Fortune 500.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(201,166,74,.1),rgba(34,197,94,.1));"><i class="fas fa-user-tie" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Sarah Lindqvist</strong><span class="team-role">CFO & Financial Advisor</span><p>Former Goldman Sachs. Expertise in M&A and financial modeling.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(59,130,246,.1));"><i class="fas fa-user-gear" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>David Okonkwo</strong><span class="team-role">Head of Web Development</span><p>Full-stack architect. Built platforms serving 10M+ monthly users.</p></div></div>
+      <div class="team-card"><div class="team-img" style="background:linear-gradient(135deg,rgba(201,166,74,.1),rgba(168,85,247,.1));"><i class="fas fa-user-robot" style="font-size:3.5rem;"></i></div><div class="team-info"><strong>Priya Sharma</strong><span class="team-role">AI & Innovation Lead</span><p>ML engineer turned consultant. Specializes in AI strategy and automation.</p></div></div>
+    </div>
+  </section>
+  <div class="cta-band"><h2>Want to Join Our Team?</h2><p>We're always looking for brilliant minds.</p><button class="btn-primary" onclick="goPage('careers')"><i class="fas fa-briefcase" style="margin-right:8px;"></i>View Open Roles</button></div>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= INSIGHTS PAGE ================= -->
+<div id="page-insights" class="page">
+  <section class="sec" style="padding-top:110px;">
+    <div class="sec-center"><span class="tag"><i class="fas fa-lightbulb" style="margin-right:5px;"></i> Insights & Ideas</span><h2 class="headline">Thought Leadership from Our Experts</h2></div>
+    <div class="grid-3">
+      <div class="blog-card anim"><div class="blog-img" style="background:linear-gradient(135deg,rgba(201,166,74,.15),rgba(59,130,246,.2));"><i class="fas fa-globe"></i></div><div class="blog-body"><span class="btag"><i class="fas fa-code"></i> Web Dev</span><h3>The Future of Web: AI-Driven Interfaces in 2025</h3><p>How generative AI is reshaping digital experience design globally.</p><div class="blog-meta"><i class="far fa-calendar-alt"></i> Jan 15, 2025 · 8 min read</div></div></div>
+      <div class="blog-card anim"><div class="blog-img" style="background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(201,166,74,.1));"><i class="fas fa-chart-line"></i></div><div class="blog-body"><span class="btag"><i class="fas fa-bullseye"></i> Strategy</span><h3>5 Market Entry Mistakes Even Smart Founders Make</h3><p>Lessons from 200+ market entries distilled into actionable frameworks.</p><div class="blog-meta"><i class="far fa-calendar-alt"></i> Jan 8, 2025 · 6 min read</div></div></div>
+      <div class="blog-card anim"><div class="blog-img" style="background:linear-gradient(135deg,rgba(168,85,247,.12),rgba(59,130,246,.15));"><i class="fas fa-shield-alt"></i></div><div class="blog-body"><span class="btag"><i class="fas fa-lock"></i> IT Security</span><h3>Zero Trust Architecture: Why It's No Longer Optional</h3><p>Implementing zero-trust in modern enterprise environments.</p><div class="blog-meta"><i class="far fa-calendar-alt"></i> Dec 20, 2024 · 10 min read</div></div></div>
+      <div class="blog-card anim"><div class="blog-img" style="background:linear-gradient(135deg,rgba(239,68,68,.1),rgba(201,166,74,.15));"><i class="fas fa-bullseye"></i></div><div class="blog-body"><span class="btag"><i class="fas fa-briefcase"></i> Career</span><h3>Navigating Your Career Pivot: A Practical Roadmap</h3><p>From identifying skills to landing your first role in a new field.</p><div class="blog-meta"><i class="far fa-calendar-alt"></i> Dec 10, 2024 · 7 min read</div></div></div>
+      <div class="blog-card anim"><div class="blog-img" style="background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(59,130,246,.15));"><i class="fas fa-chart-simple"></i></div><div class="blog-body"><span class="btag"><i class="fas fa-chart-line"></i> Marketing</span><h3>Post-Cookie Marketing: Preparing Your Stack</h3><p>Future-proof your digital marketing in a privacy-first world.</p><div class="blog-meta"><i class="far fa-calendar-alt"></i> Nov 28, 2024 · 9 min read</div></div></div>
+      <div class="blog-card anim"><div class="blog-img" style="background:linear-gradient(135deg,rgba(201,166,74,.15),rgba(168,85,247,.1));"><i class="fas fa-robot"></i></div><div class="blog-body"><span class="btag"><i class="fas fa-microchip"></i> AI</span><h3>Building Your AI Strategy Before Your Competitor Does</h3><p>A practical framework for organizational AI readiness in 2025.</p><div class="blog-meta"><i class="far fa-calendar-alt"></i> Nov 15, 2024 · 12 min read</div></div></div>
+    </div>
+  </section>
+  <section class="sec" style="border-top:1px solid var(--border);">
+    <div class="sec-center"><span class="tag"><i class="fas fa-download" style="margin-right:5px;"></i> Research Downloads</span><h2 class="headline">Reports & Whitepapers</h2></div>
+    <div class="wp-grid">
+      <div class="wp-card"><div class="wp-icon"><i class="fas fa-file-pdf"></i></div><div class="wp-meta">January 2025 · 48 pages</div><h4>The State of Digital Transformation 2025</h4><p>Key trends shaping enterprise digital transformation globally.</p><div class="btn-dl" onclick="downloadBrochure('Digital Transformation Report 2025')"><i class="fas fa-download"></i> Download Free</div></div>
+      <div class="wp-card"><div class="wp-icon"><i class="fas fa-chart-simple"></i></div><div class="wp-meta">December 2024 · 32 pages</div><h4>AI Readiness Index: Enterprise Edition</h4><p>How 500 organizations are preparing for AI in 2025.</p><div class="btn-dl" onclick="downloadBrochure('AI Readiness Index 2024')"><i class="fas fa-download"></i> Download Free</div></div>
+      <div class="wp-card"><div class="wp-icon"><i class="fas fa-shield-alt"></i></div><div class="wp-meta">November 2024 · 28 pages</div><h4>Zero Trust Security Framework Guide</h4><p>Practical implementation guide for cybersecurity modernization.</p><div class="btn-dl" onclick="downloadBrochure('Zero Trust Framework Guide')"><i class="fas fa-download"></i> Download Free</div></div>
+      <div class="wp-card"><div class="wp-icon"><i class="fas fa-bullseye"></i></div><div class="wp-meta">October 2024 · 24 pages</div><h4>Career Transformation Playbook 2025</h4><p>Strategic frameworks for building high-performance talent pipelines.</p><div class="btn-dl" onclick="downloadBrochure('Career Transformation Playbook')"><i class="fas fa-download"></i> Download Free</div></div>
+    </div>
+  </section>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= PRICING PAGE ================= -->
+<div id="page-pricing" class="page">
+  <section class="sec" style="padding-top:110px;">
+    <div class="sec-center"><span class="tag"><i class="fas fa-tag" style="margin-right:5px;"></i> Transparent Pricing</span><h2 class="headline">Plans for Every Stage</h2><p class="lead" style="margin-top:.8rem;">Flexible packages designed to deliver maximum value whether you're a startup or enterprise.</p></div>
+    <div class="pricing-wrap">
+      <div class="p-card"><div class="p-name">STARTER</div><div class="p-price"><sup>$</sup>499<sub>/mo</sub></div><ul class="p-features"><li>1 Service Area</li><li>Monthly Sessions (2×)</li><li>Email & Chat Support</li><li>Monthly Reports</li><li>Up to 5 Team Members</li></ul><button class="btn-outline" style="width:100%;" onclick="goPage('contact')"><i class="fas fa-rocket"></i> Get Started</button></div>
+      <div class="p-card featured"><div class="p-badge"><i class="fas fa-crown"></i> Most Popular</div><div class="p-name">GROWTH</div><div class="p-price"><sup>$</sup>1,499<sub>/mo</sub></div><ul class="p-features"><li>3 Service Areas</li><li>Bi-weekly Sessions</li><li>Dedicated Account Manager</li><li>Weekly Reports</li><li>Up to 20 Members</li><li>24hr Priority Support</li><li>CRM Dashboard Access</li></ul><button class="btn-primary" style="width:100%;" onclick="openPayModal()"><i class="fas fa-credit-card"></i> Get Started</button></div>
+      <div class="p-card"><div class="p-name">ENTERPRISE</div><div class="p-price" style="font-size:1.8rem;padding:8px 0;">Custom</div><ul class="p-features"><li>Unlimited Services</li><li>Dedicated Consultant Team</li><li>On-site Sessions</li><li>Real-time Analytics</li><li>Unlimited Members</li><li>24/7 Support + SLA</li><li>Full CRM & PM Suite</li></ul><button class="btn-outline" style="width:100%;" onclick="goPage('contact')"><i class="fas fa-phone-alt"></i> Contact Sales</button></div>
+    </div>
+    <p style="text-align:center;color:rgba(255,255,255,.3);font-size:.82rem;margin-top:2rem;">All plans include a 14-day free trial · No credit card required · Cancel anytime</p>
+  </section>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= CAREERS PAGE ================= -->
+<div id="page-careers" class="page">
+  <section class="sec" style="padding-top:110px;">
+    <div class="sec-center"><span class="tag"><i class="fas fa-briefcase" style="margin-right:5px;"></i> Join Our Team</span><h2 class="headline">Build Your Career at Nexus</h2></div>
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;text-align:center;margin:0 auto 2rem;max-width:1100px;"><i class="fas fa-door-open" style="color:var(--gold);"></i> Open Positions (6)</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.4rem;max-width:1100px;margin:0 auto;">
+      <div class="job-card"><span class="j-type">Full-Time</span><h3>Senior Business Strategist</h3><div class="j-dept"><i class="fas fa-building"></i> Business Consultancy · New York / Remote</div><p>Lead strategic engagements with enterprise clients. 5+ years consulting experience required.</p><button class="btn-outline" style="margin-top:1rem;padding:9px 18px;font-size:.82rem;" onclick="openApplicationModal('Senior Business Strategist', 'Business Consultancy · New York / Remote')"><i class="fas fa-paper-plane"></i> Apply Now</button></div>
+      <div class="job-card"><span class="j-type">Full-Time</span><h3>Full-Stack Web Developer</h3><div class="j-dept"><i class="fas fa-code"></i> Web Development · Remote</div><p>Build world-class web apps. React and Node.js proficiency required.</p><button class="btn-outline" style="margin-top:1rem;padding:9px 18px;font-size:.82rem;" onclick="openApplicationModal('Full-Stack Web Developer', 'Web Development · Remote')"><i class="fas fa-paper-plane"></i> Apply Now</button></div>
+      <div class="job-card"><span class="j-type">Full-Time</span><h3>Digital Marketing Manager</h3><div class="j-dept"><i class="fas fa-chart-line"></i> Digital Marketing · London / Remote</div><p>Own SEO, PPC, and social campaigns across a portfolio of B2B clients.</p><button class="btn-outline" style="margin-top:1rem;padding:9px 18px;font-size:.82rem;" onclick="openApplicationModal('Digital Marketing Manager', 'Digital Marketing · London / Remote')"><i class="fas fa-paper-plane"></i> Apply Now</button></div>
+      <div class="job-card"><span class="j-type">Contract</span><h3>Cloud Solutions Architect</h3><div class="j-dept"><i class="fas fa-cloud"></i> IT Consultancy · Remote</div><p>Design cloud-native architectures for enterprise transformation projects.</p><button class="btn-outline" style="margin-top:1rem;padding:9px 18px;font-size:.82rem;" onclick="openApplicationModal('Cloud Solutions Architect', 'IT Consultancy · Remote')"><i class="fas fa-paper-plane"></i> Apply Now</button></div>
+      <div class="job-card"><span class="j-type">Part-Time</span><h3>Career Development Coach</h3><div class="j-dept"><i class="fas fa-bullseye"></i> Career Guidance · Remote</div><p>Coach professionals through career transitions and leadership growth.</p><button class="btn-outline" style="margin-top:1rem;padding:9px 18px;font-size:.82rem;" onclick="openApplicationModal('Career Development Coach', 'Career Guidance · Remote')"><i class="fas fa-paper-plane"></i> Apply Now</button></div>
+      <div class="job-card"><span class="j-type">Full-Time</span><h3>AI Strategy Consultant</h3><div class="j-dept"><i class="fas fa-robot"></i> AI & Innovation · New York / Remote</div><p>Help clients build and execute AI roadmaps. ML + business acumen required.</p><button class="btn-outline" style="margin-top:1rem;padding:9px 18px;font-size:.82rem;" onclick="openApplicationModal('AI Strategy Consultant', 'AI & Innovation · New York / Remote')"><i class="fas fa-paper-plane"></i> Apply Now</button></div>
+    </div>
+  </section>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+<!-- ================= CONTACT PAGE ================= -->
+<div id="page-contact" class="page">
+  <section class="sec" style="padding-top:110px;">
+    <div class="sec-center"><span class="tag"><i class="fas fa-envelope" style="margin-right:5px;"></i> Let's Talk</span><h2 class="headline">Start Your Transformation Today</h2></div>
+    <div class="contact-wrap">
+      <div class="c-info">
+        <h3>Ready to unlock your potential?</h3>
+        <p>Fill in the form and a senior consultant will reach out within 24 hours.</p>
+        <div class="c-det"><div class="c-ico"><i class="fas fa-map-pin"></i></div><div><strong>Headquarters</strong><span>200 Park Avenue, Suite 1700, New York, NY 10166</span></div></div>
+        <div class="c-det"><div class="c-ico"><i class="fas fa-phone-alt"></i></div><div><strong>Phone</strong><span>+1 (212) 555-9200</span></div></div>
+        <div class="c-det"><div class="c-ico"><i class="fas fa-envelope"></i></div><div><strong>Email</strong><span>hello@nexusconsult.com</span></div></div>
+        <div class="c-det"><div class="c-ico"><i class="fas fa-clock"></i></div><div><strong>Hours</strong><span>Mon–Fri, 9AM–6PM EST</span></div></div>
+        
+        <!-- Dynamic Appointment Booking Section -->
+        <div class="booking-section">
+          <span class="tag" style="margin-bottom:1rem;"><i class="fas fa-calendar-check"></i> Book an Appointment</span>
+          
+          <div id="bookingStatus" style="display:none; margin-bottom:1rem; padding:12px; border-radius:8px;"></div>
+          
+          <div id="bookingStep1">
+            <div class="booking-wrap">
+              <div class="cal-box">
+                <div class="cal-head">
+                  <h4 id="currentMonthYear">December 2025</h4>
+                  <div style="display:flex;gap:6px;">
+                    <button class="cal-nav-btn" id="prevMonth" onclick="changeMonth(-1)">‹</button>
+                    <button class="cal-nav-btn" id="nextMonth" onclick="changeMonth(1)">›</button>
+                  </div>
+                </div>
+                <div class="cal-grid" id="calendarGrid"></div>
+                <p style="font-size:.7rem;color:var(--muted);margin-top:1rem;text-align:center;"><i class="fas fa-circle" style="color:var(--green); font-size: .5rem;"></i> Available slots • Green dots show available days</p>
+              </div>
+              <div class="slots-box">
+                <h4>Available Time Slots</h4>
+                <div id="selectedDateDisplay" style="color:var(--gold);font-size:.9rem;margin-bottom:1rem;"></div>
+                <div class="slots-list" id="availableSlots"></div>
+                <div id="noSlotsMessage" style="display:none; text-align:center; padding:2rem; color:var(--muted);"><i class="fas fa-calendar-times"></i> No available slots for this date</div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="bookingStep2" style="display:none;">
+            <div class="booking-confirmation">
+              <h5><i class="fas fa-check-circle" style="color:var(--gold);"></i> Confirm Your Appointment</h5>
+              <div class="booking-detail"><span>Date:</span> <span id="confirmDate">-</span></div>
+              <div class="booking-detail"><span>Time:</span> <span id="confirmTime">-</span></div>
+              <div class="booking-detail"><span>Duration:</span> <span>45 minutes</span></div>
+              <div class="booking-detail"><span>Type:</span> <span>Video Consultation</span></div>
+              <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+                <button class="btn-outline" style="flex:1;" onclick="backToBookingStep1()"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="btn-primary" style="flex:1;" onclick="confirmBooking()"><i class="fas fa-check"></i> Confirm Booking</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Form -->
+      <div class="c-form">
+        <h3><i class="fas fa-pen-alt"></i> Book a Free Consultation</h3>
+        <div id="contactFormStatus" style="display:none; margin-bottom:1rem; padding:12px; border-radius:8px;"></div>
+        
+        <div class="fr2">
+          <div class="fg" id="field-firstName">
+            <label><i class="fas fa-user"></i> First Name *</label>
+            <input type="text" id="contactFirstName" placeholder="John">
+            <span class="error-message" id="error-firstName"></span>
+          </div>
+          <div class="fg" id="field-lastName">
+            <label><i class="fas fa-user"></i> Last Name *</label>
+            <input type="text" id="contactLastName" placeholder="Smith">
+            <span class="error-message" id="error-lastName"></span>
+          </div>
+        </div>
+        <div class="fg" id="field-email">
+          <label><i class="fas fa-envelope"></i> Business Email *</label>
+          <input type="email" id="contactEmail" placeholder="john@company.com">
+          <span class="error-message" id="error-email"></span>
+        </div>
+        <div class="fg" id="field-phone">
+          <label><i class="fas fa-phone-alt"></i> Phone *</label>
+          <input type="tel" id="contactPhone" placeholder="+1 234 567 8900">
+          <span class="error-message" id="error-phone"></span>
+        </div>
+        <div class="fg" id="field-company">
+          <label><i class="fas fa-building"></i> Company *</label>
+          <input type="text" id="contactCompany" placeholder="Your Company">
+          <span class="error-message" id="error-company"></span>
+        </div>
+        <div class="fg" id="field-service">
+          <label><i class="fas fa-cogs"></i> Service of Interest *</label>
+          <select id="contactService">
+            <option value="">Select a service...</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Networking"> Networking</option>
+            <option value="Cyber Security">Cyber Security</option>
+            <option value="Cloud Computing">Cloud Computing</option>
+            <option value="Data Analytics">Data Analytics</option>
+            <option value="AI/ML">AI/ML</option>
+            <option value="Android Application">Android Application</option>
+            <option value="Software Testing">Software Testing</option>
+          </select>
+          <span class="error-message" id="error-service"></span>
+        </div>
+        <div class="fg" id="field-budget">
+          <label><i class="fas fa-coins"></i> Budget Range</label>
+          <select id="contactBudget">
+            <option>Under $5,000</option>
+            <option>$5K – $15K</option>
+            <option>$15K – $50K</option>
+            <option>$50K – $100K</option>
+            <option>$100K+</option>
+          </select>
+        </div>
+        <div class="fg" id="field-message">
+          <label><i class="fas fa-comment"></i> Message / Project Details</label>
+          <textarea id="contactMessage" placeholder="Tell us about your goals, timeline, and specific challenges..."></textarea>
+        </div>
+        
+        <div id="selectedAppointmentInfo" style="background:var(--gold-dim); border:1px solid var(--gold-b); border-radius:8px; padding:12px; margin-bottom:1rem; display:none;">
+          <p style="color:var(--gold); font-weight:600; margin-bottom:5px;"><i class="fas fa-calendar-check"></i> Selected Appointment:</p>
+          <p style="font-size:.85rem;" id="selectedDateTime"></p>
+        </div>
+        
+        <button class="btn-primary" style="width:100%;padding:14px;" id="submitBtn" onclick="submitContact()"><i class="fas fa-paper-plane"></i> Submit & Book Free Call →</button>
+        <p style="text-align:center;font-size:.73rem;color:var(--muted);margin-top:.8rem;">🔒 Your information is secure and never shared with third parties.</p>
+      </div>
+    </div>
+  </section>
+  <footer><div class="f-bottom" style="max-width:1200px;margin:0 auto;padding:1.4rem 0;"><span>© 2025 NexusConsult Ltd. All rights reserved.</span></div></footer>
+</div>
+
+</div>
+
+<script>
+// ======================== CALENDAR DATA ========================
+const availableSlotsData = {
+    '2025-12-02': ['9:00 AM', '11:00 AM', '2:00 PM', '4:00 PM'],
+    '2025-12-04': ['10:00 AM', '1:00 PM', '3:00 PM'],
+    '2025-12-08': ['9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM', '3:00 PM', '4:00 PM'],
+    '2025-12-10': ['9:00 AM', '11:00 AM', '2:00 PM'],
+    '2025-12-14': ['10:00 AM', '1:00 PM', '3:00 PM', '4:00 PM'],
+    '2025-12-16': ['9:00 AM', '11:00 AM', '2:00 PM', '4:00 PM'],
+    '2025-12-18': ['9:00 AM', '10:00 AM', '2:00 PM'],
+    '2025-12-22': ['9:00 AM', '10:00 AM', '11:00 AM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM'],
+    '2025-12-23': ['9:00 AM', '11:00 AM', '2:00 PM', '4:00 PM'],
+    '2025-12-24': ['9:00 AM', '10:00 AM', '11:00 AM'],
+    '2025-12-26': ['9:00 AM', '2:00 PM', '4:00 PM']
+};
+
+const bookedSlots = [];
+let currentMonth = 2; // December (0-based, so 2 = March? Let's fix this)
+let currentYear = 2025;
+let selectedDate = null;
+let selectedTime = null;
+let selectedDateStr = '';
+
+// Fix month initialization to show December 2025
+function initCalendar() {
+    currentMonth = 11; // December (0-based)
+    currentYear = 2025;
+    generateCalendar();
+}
+
+function generateCalendar() {
+    const calendar = document.getElementById('calendarGrid');
+    if (!calendar) return;
+    
+    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    let html = days.map(d => `<div class="cal-hdr">${d}</div>`).join('');
+    
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date();
+    
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    document.getElementById('currentMonthYear').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    
+    const prevMonthDays = new Date(currentYear, currentMonth, 0).getDate();
+    for (let i = firstDay - 1; i >= 0; i--) {
+        html += `<div class="cal-d other">${prevMonthDays - i}</div>`;
+    }
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const hasSlot = availableSlotsData[dateStr] && availableSlotsData[dateStr].length > 0;
+        const isToday = currentYear === today.getFullYear() && 
+                       currentMonth === today.getMonth() && 
+                       day === today.getDate();
+        const isSelected = selectedDateStr === dateStr;
+        
+        let classes = 'cal-d';
+        if (hasSlot) classes += ' has-slot';
+        if (isToday) classes += ' today';
+        if (isSelected) classes += ' selected';
+        
+        html += `<div class="${classes}" onclick="selectDate('${dateStr}', ${day})">${day}</div>`;
+    }
+    
+    const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+    const remainingCells = totalCells - (firstDay + daysInMonth);
+    for (let i = 1; i <= remainingCells; i++) {
+        html += `<div class="cal-d other">${i}</div>`;
+    }
+    
+    calendar.innerHTML = html;
+    
+    if (selectedDateStr) {
+        displaySlotsForDate(selectedDateStr);
+    }
+}
+
+function changeMonth(delta) {
+    currentMonth += delta;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    generateCalendar();
+    if (selectedDateStr) {
+        document.getElementById('selectedDateDisplay').innerHTML = '';
+        document.getElementById('availableSlots').innerHTML = '';
+    }
+}
+
+function selectDate(dateStr, day) {
+    selectedDateStr = dateStr;
+    selectedTime = null;
+    generateCalendar();
+    displaySlotsForDate(dateStr);
+    const date = new Date(dateStr);
+    const formattedDate = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    document.getElementById('selectedDateDisplay').innerHTML = `Selected: <strong style="color:var(--gold);">${formattedDate}</strong>`;
+}
+
+function displaySlotsForDate(dateStr) {
+    const slotsContainer = document.getElementById('availableSlots');
+    const noSlotsMessage = document.getElementById('noSlotsMessage');
+    
+    const slots = availableSlotsData[dateStr] || [];
+    const availableSlots = slots.filter(time => !bookedSlots.includes(`${dateStr} ${time}`));
+    
+    if (availableSlots.length === 0) {
+        slotsContainer.innerHTML = '';
+        noSlotsMessage.style.display = 'block';
+        return;
+    }
+    
+    noSlotsMessage.style.display = 'none';
+    
+    let slotsHtml = '';
+    availableSlots.forEach(time => {
+        slotsHtml += `<div class="slot" onclick="selectTimeSlot('${dateStr}', '${time}', this)">${time}<span class="slot-badge"><i class="fas fa-check-circle"></i> Available</span></div>`;
+    });
+    
+    slotsContainer.innerHTML = slotsHtml;
+}
+
+function selectTimeSlot(dateStr, time, element) {
+    document.querySelectorAll('.slot').forEach(slot => {
+        slot.classList.remove('selected');
+    });
+    element.classList.add('selected');
+    selectedTime = time;
+    showBookingStep2(dateStr, time);
+}
+
+function showBookingStep2(dateStr, time) {
+    const date = new Date(dateStr);
+    const formattedDate = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    document.getElementById('confirmDate').textContent = formattedDate;
+    document.getElementById('confirmTime').textContent = time;
+    
+    document.getElementById('bookingStep1').style.display = 'none';
+    document.getElementById('bookingStep2').style.display = 'block';
+    
+    document.getElementById('selectedDateTime').textContent = `${formattedDate} at ${time}`;
+    document.getElementById('selectedAppointmentInfo').style.display = 'block';
+}
+
+function backToBookingStep1() {
+    document.getElementById('bookingStep2').style.display = 'none';
+    document.getElementById('bookingStep1').style.display = 'block';
+}
+
+function confirmBooking() {
+    if (!selectedDateStr || !selectedTime) {
+        showBookingStatus('Please select a date and time first.', 'error');
+        return;
+    }
+    bookedSlots.push(`${selectedDateStr} ${selectedTime}`);
+    showBookingStatus('Appointment booked successfully! Please complete the form below.', 'success');
+    backToBookingStep1();
+    displaySlotsForDate(selectedDateStr);
+    generateCalendar();
+}
+
+function showBookingStatus(message, type) {
+    const statusEl = document.getElementById('bookingStatus');
+    statusEl.style.display = 'block';
+    statusEl.innerHTML = (type === 'success' ? '<i class="fas fa-check-circle"></i> ' : '<i class="fas fa-exclamation-circle"></i> ') + message;
+    statusEl.style.background = type === 'success' ? 'rgba(34,197,94,.1)' : 'rgba(239,68,68,.1)';
+    statusEl.style.color = type === 'success' ? 'var(--green)' : 'var(--red)';
+    statusEl.style.border = type === 'success' ? '1px solid rgba(34,197,94,.3)' : '1px solid rgba(239,68,68,.3)';
+    
+    setTimeout(() => {
+        statusEl.style.display = 'none';
+    }, 5000);
+}
+
+// ======================== CONTACT FORM ========================
+function validateContactForm() {
+    let isValid = true;
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('.fg').forEach(el => el.classList.remove('error'));
+    
+    const firstName = document.getElementById('contactFirstName').value.trim();
+    if (!firstName) {
+        document.getElementById('error-firstName').textContent = 'First name is required';
+        document.getElementById('field-firstName').classList.add('error');
+        isValid = false;
+    }
+    
+    const lastName = document.getElementById('contactLastName').value.trim();
+    if (!lastName) {
+        document.getElementById('error-lastName').textContent = 'Last name is required';
+        document.getElementById('field-lastName').classList.add('error');
+        isValid = false;
+    }
+    
+    const email = document.getElementById('contactEmail').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        document.getElementById('error-email').textContent = 'Email is required';
+        document.getElementById('field-email').classList.add('error');
+        isValid = false;
+    } else if (!emailRegex.test(email)) {
+        document.getElementById('error-email').textContent = 'Please enter a valid email address';
+        document.getElementById('field-email').classList.add('error');
+        isValid = false;
+    }
+    
+    const phone = document.getElementById('contactPhone').value.trim();
+    if (!phone) {
+        document.getElementById('error-phone').textContent = 'Phone number is required';
+        document.getElementById('field-phone').classList.add('error');
+        isValid = false;
+    }
+    
+    const company = document.getElementById('contactCompany').value.trim();
+    if (!company) {
+        document.getElementById('error-company').textContent = 'Company name is required';
+        document.getElementById('field-company').classList.add('error');
+        isValid = false;
+    }
+    
+    const service = document.getElementById('contactService').value;
+    if (!service) {
+        document.getElementById('error-service').textContent = 'Please select a service';
+        document.getElementById('field-service').classList.add('error');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function submitContact() {
+    if (!validateContactForm()) {
+        showContactFormStatus('Please fill in all required fields correctly.', 'error');
+        return;
+    }
+    
+    const formData = {
+        firstName: document.getElementById('contactFirstName').value.trim(),
+        lastName: document.getElementById('contactLastName').value.trim(),
+        email: document.getElementById('contactEmail').value.trim(),
+        phone: document.getElementById('contactPhone').value.trim(),
+        company: document.getElementById('contactCompany').value.trim(),
+        service: document.getElementById('contactService').value,
+        budget: document.getElementById('contactBudget').value,
+        message: document.getElementById('contactMessage').value.trim(),
+        appointmentDate: selectedDateStr,
+        appointmentTime: selectedTime
+    };
+    
+    console.log('Form submitted:', formData);
+    
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '<i class="fas fa-check"></i> Submitted! We\'ll contact you within 24 hours.';
+    btn.style.background = '#16a34a';
+    btn.disabled = true;
+    
+    showContactFormStatus('Your consultation request has been received! We\'ll contact you shortly.', 'success');
+    
+    setTimeout(() => {
+        document.getElementById('contactFirstName').value = '';
+        document.getElementById('contactLastName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactPhone').value = '';
+        document.getElementById('contactCompany').value = '';
+        document.getElementById('contactService').value = '';
+        document.getElementById('contactBudget').value = 'Under $5,000';
+        document.getElementById('contactMessage').value = '';
+        
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit & Book Free Call →';
+        btn.style.background = '';
+        btn.disabled = false;
+        
+        document.getElementById('selectedAppointmentInfo').style.display = 'none';
+        selectedDateStr = null;
+        selectedTime = null;
+        generateCalendar();
+        document.getElementById('selectedDateDisplay').innerHTML = '';
+        document.getElementById('availableSlots').innerHTML = '';
+    }, 5000);
+}
+
+function showContactFormStatus(message, type) {
+    const statusEl = document.getElementById('contactFormStatus');
+    statusEl.style.display = 'block';
+    statusEl.innerHTML = (type === 'success' ? '<i class="fas fa-check-circle"></i> ' : '<i class="fas fa-exclamation-circle"></i> ') + message;
+    statusEl.style.background = type === 'success' ? 'rgba(34,197,94,.1)' : 'rgba(239,68,68,.1)';
+    statusEl.style.color = type === 'success' ? 'var(--green)' : 'var(--red)';
+    statusEl.style.border = type === 'success' ? '1px solid rgba(34,197,94,.3)' : '1px solid rgba(239,68,68,.3)';
+    
+    setTimeout(() => {
+        statusEl.style.display = 'none';
+    }, 5000);
+}
+
+// ======================== CAREER APPLICATION FORM ========================
+let selectedJobTitle = '';
+let selectedJobDepartment = '';
+
+function openApplicationModal(jobTitle, jobDepartment) {
+    selectedJobTitle = jobTitle;
+    selectedJobDepartment = jobDepartment;
+    
+    document.getElementById('jobTitle').textContent = jobTitle;
+    document.getElementById('jobDepartment').innerHTML = `<i class="fas fa-building"></i> ${jobDepartment}`;
+    
+    // Set icon based on job title
+    const icon = document.getElementById('applicationIcon');
+    if (jobTitle.includes('Developer') || jobTitle.includes('Web')) {
+        icon.className = 'fas fa-code';
+    } else if (jobTitle.includes('Marketing')) {
+        icon.className = 'fas fa-chart-line';
+    } else if (jobTitle.includes('Strategist') || jobTitle.includes('Consultant')) {
+        icon.className = 'fas fa-briefcase';
+    } else if (jobTitle.includes('Cloud') || jobTitle.includes('Solutions')) {
+        icon.className = 'fas fa-cloud';
+    } else if (jobTitle.includes('Coach') || jobTitle.includes('Development')) {
+        icon.className = 'fas fa-bullseye';
+    } else if (jobTitle.includes('AI')) {
+        icon.className = 'fas fa-robot';
+    } else {
+        icon.className = 'fas fa-briefcase';
+    }
+    
+    // Clear previous form data
+    document.getElementById('appFirstName').value = '';
+    document.getElementById('appLastName').value = '';
+    document.getElementById('appEmail').value = '';
+    document.getElementById('appPhone').value = '';
+    document.getElementById('appLocation').value = '';
+    document.getElementById('appLinkedin').value = '';
+    document.getElementById('appPortfolio').value = '';
+    document.getElementById('appExperience').value = '';
+    document.getElementById('appCover').value = '';
+    document.getElementById('appConsent').checked = false;
+    document.getElementById('fileName').innerHTML = '';
+    document.getElementById('resumeLabel').innerHTML = 'Upload Resume/CV *';
+    
+    // Clear error messages
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('.fg').forEach(el => el.classList.remove('error'));
+    
+    document.getElementById('applicationModal').classList.add('open');
+}
+
+function closeApplicationModal() {
+    document.getElementById('applicationModal').classList.remove('open');
+}
+
+// Handle file upload display
+document.getElementById('appResume')?.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const fileName = file.name;
+        document.getElementById('fileName').innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
+        document.getElementById('resumeLabel').innerHTML = 'Change Resume/CV';
+    }
+});
+
+function validateApplicationForm() {
+    let isValid = true;
+    
+    // Clear previous errors
+    document.querySelectorAll('#applicationForm .error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('#applicationForm .fg').forEach(el => el.classList.remove('error'));
+    
+    // First Name
+    const firstName = document.getElementById('appFirstName').value.trim();
+    if (!firstName) {
+        document.getElementById('error-app-firstName').textContent = 'First name is required';
+        document.getElementById('field-app-firstName').classList.add('error');
+        isValid = false;
+    }
+    
+    // Last Name
+    const lastName = document.getElementById('appLastName').value.trim();
+    if (!lastName) {
+        document.getElementById('error-app-lastName').textContent = 'Last name is required';
+        document.getElementById('field-app-lastName').classList.add('error');
+        isValid = false;
+    }
+    
+    // Email
+    const email = document.getElementById('appEmail').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        document.getElementById('error-app-email').textContent = 'Email is required';
+        document.getElementById('field-app-email').classList.add('error');
+        isValid = false;
+    } else if (!emailRegex.test(email)) {
+        document.getElementById('error-app-email').textContent = 'Please enter a valid email address';
+        document.getElementById('field-app-email').classList.add('error');
+        isValid = false;
+    }
+    
+    // Phone
+    const phone = document.getElementById('appPhone').value.trim();
+    if (!phone) {
+        document.getElementById('error-app-phone').textContent = 'Phone number is required';
+        document.getElementById('field-app-phone').classList.add('error');
+        isValid = false;
+    }
+    
+    // Location
+    const location = document.getElementById('appLocation').value.trim();
+    if (!location) {
+        document.getElementById('error-app-location').textContent = 'Location is required';
+        document.getElementById('field-app-location').classList.add('error');
+        isValid = false;
+    }
+    
+    // Experience
+    const experience = document.getElementById('appExperience').value;
+    if (!experience) {
+        document.getElementById('error-app-experience').textContent = 'Please select years of experience';
+        document.getElementById('field-app-experience').classList.add('error');
+        isValid = false;
+    }
+    
+    // Cover Letter
+    const cover = document.getElementById('appCover').value.trim();
+    if (!cover) {
+        document.getElementById('error-app-cover').textContent = 'Cover letter is required';
+        document.getElementById('field-app-cover').classList.add('error');
+        isValid = false;
+    }
+    
+    // Resume
+    const resume = document.getElementById('appResume').files[0];
+    if (!resume) {
+        document.getElementById('error-app-resume').textContent = 'Please upload your resume';
+        isValid = false;
+    }
+    
+    // Consent
+    if (!document.getElementById('appConsent').checked) {
+        document.getElementById('error-app-consent').textContent = 'You must agree to the terms';
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function submitApplication() {
+    if (!validateApplicationForm()) {
+        showToast('<i class="fas fa-exclamation-circle"></i> Please fix the errors in the form', 'error');
+        return;
+    }
+    
+    const formData = {
+        jobTitle: selectedJobTitle,
+        jobDepartment: selectedJobDepartment,
+        firstName: document.getElementById('appFirstName').value.trim(),
+        lastName: document.getElementById('appLastName').value.trim(),
+        email: document.getElementById('appEmail').value.trim(),
+        phone: document.getElementById('appPhone').value.trim(),
+        location: document.getElementById('appLocation').value.trim(),
+        linkedin: document.getElementById('appLinkedin').value.trim(),
+        portfolio: document.getElementById('appPortfolio').value.trim(),
+        experience: document.getElementById('appExperience').value,
+        cover: document.getElementById('appCover').value.trim(),
+        resume: document.getElementById('appResume').files[0]?.name
+    };
+    
+    console.log('Application submitted:', formData);
+    
+    const btn = document.getElementById('submitAppBtn');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    btn.disabled = true;
+    
+    // Simulate API call
+    setTimeout(() => {
+        closeApplicationModal();
+        showToast(`<i class="fas fa-check-circle"></i> Application for ${selectedJobTitle} submitted successfully!`, 'success');
+        
+        btn.innerHTML = originalText;
+        btn.style.background = '';
+        btn.disabled = false;
+    }, 1500);
+}
+
+// ======================== VIEW SYSTEM ========================
+function goPage(id) {
+    document.querySelectorAll('#view-site .page').forEach(p => p.classList.remove('active'));
+    const pg = document.getElementById('page-' + id);
+    if (pg) pg.classList.add('active');
+    
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('on'));
+    const nl = document.getElementById('nl-' + id);
+    if (nl) nl.classList.add('on');
+    
+    closeMob();
+    window.scrollTo(0, 0);
+    observeAnim();
+    
+    if (id === 'contact') {
+        generateCalendar();
+    }
+}
+
+function closeMob() { 
+    document.getElementById('mobNav').classList.remove('open'); 
+}
+
+// ======================== SERVICE DETAIL ========================
+const svcData = {
+    web: { icon: 'fa-globe', tag: 'Web Development', title: 'Custom Web Development', desc: 'From stunning marketing sites to complex enterprise platforms, we craft high-performance digital experiences that drive business results.', features: ['Custom Web Application Development', 'E-Commerce Solutions', 'UI/UX Design & Prototyping', 'Progressive Web Apps', 'Performance Optimization', 'API Integration'] },
+    marketing: { icon: 'fa-chart-line', tag: 'Digital Marketing', title: 'Data-Driven Digital Marketing', desc: 'We build integrated digital marketing ecosystems that attract, engage, and convert your ideal customers.', features: ['SEO Strategy', 'PPC Management', 'Social Media Marketing', 'Content Marketing', 'Email Automation', 'CRO'] },
+    networking: { icon: 'fa-network-wired', tag: 'Networking Solutions', title: 'Enterprise Networking', desc: 'Design, implement, and optimize robust network infrastructures for modern businesses.', features: ['Network Architecture Design', 'SD-WAN Implementation', 'Wi-Fi Design & Optimization', 'Infrastructure Audit', 'Routing & Switching Optimization', 'Network Security Integration'] },
+    cyber: { icon: 'fa-shield-haltered', tag: 'Cyber Security', title: 'Comprehensive Security Solutions', desc: 'Protect your organization with enterprise-grade security strategies and implementations.', features: ['Threat Modeling', 'Penetration Testing', 'Zero-Trust Implementation', 'Incident Response', 'Compliance & Governance', 'Security Training'] },
+    cloud: { icon: 'fa-cloud-upload-alt', tag: 'Cloud Computing', title: 'Cloud Strategy & Migration', desc: 'Leverage the power of cloud computing for scalability, reliability, and cost optimization.', features: ['AWS/Azure/GCP Architecture', 'Cloud Migration Strategy', 'Serverless Computing', 'Cost Optimization', 'Hybrid Cloud Solutions', 'Containerization (Kubernetes)'] },
+    data: { icon: 'fa-database', tag: 'Data Analytics', title: 'Data-Driven Decision Making', desc: 'Transform raw data into actionable insights with advanced analytics and BI solutions.', features: ['Business Intelligence', 'Data Warehousing', 'Real-time Dashboards', 'Predictive Analytics', 'Data Governance', 'ETL Pipeline Development'] },
+    ai: { icon: 'fa-robot', tag: 'AI & Machine Learning', title: 'Intelligent Automation Solutions', desc: 'Harness the power of AI to automate processes, gain insights, and create competitive advantage.', features: ['Custom Model Development', 'NLP & Computer Vision', 'MLOps Implementation', 'AI Strategy Consulting', 'Intelligent Automation', 'Generative AI Solutions'] },
+    android: { icon: 'fab fa-android', tag: 'Android Development', title: 'Native Android Applications', desc: 'Build powerful, performant Android apps that delight users and drive business growth.', features: ['Native Kotlin/Java Apps', 'Cross-platform Solutions', 'Google Play Publishing', 'UI/UX Design', 'App Maintenance & Support', 'Performance Optimization'] },
+    testing: { icon: 'fas fa-vial', tag: 'Software Testing', title: 'Quality Assurance Solutions', desc: 'Ensure your software meets the highest quality standards with comprehensive testing strategies.', features: ['Automated Testing', 'Performance & Load Testing', 'Security Testing', 'QA Strategy Development', 'CI/CD Integration', 'Test Automation Frameworks'] }
+};
+
+function goServiceDetail(svc) {
+    const d = svcData[svc] || svcData.web;
+    document.getElementById('svc-icon').innerHTML = `<i class="fas ${d.icon}"></i>`;
+    document.getElementById('svc-tag').textContent = d.tag;
+    document.getElementById('svc-title').textContent = d.title;
+    document.getElementById('svc-desc').textContent = d.desc;
+    document.getElementById('svc-visual').innerHTML = `<i class="fas ${d.icon}" style="font-size:6rem;"></i>`;
+    const fl = document.getElementById('svc-features');
+    fl.innerHTML = d.features.map(f => `<li><span class="fi"><i class="fas fa-star" style="color:var(--gold);"></i></span><span>${f}</span></li>`).join('');
+    goPage('service-detail');
+}
+
+// ======================== AUTH MODALS (ENHANCED WITH ADMIN LOGIN) ========================
+let currentRegRole = 'client'; // Default registration role
+
+function openAuth() { 
+    document.getElementById('authModal').classList.add('open'); 
+}
+
+function closeAuth(id) { 
+    document.getElementById(id || 'authModal').classList.remove('open'); 
+    document.getElementById('regModal').classList.remove('open'); 
+    document.getElementById('payModal').classList.remove('open'); 
+}
+
+function setRole(role, btn) { 
+    // Update tab styling
+    document.querySelectorAll('#authTabs .tab-b').forEach(b => b.classList.remove('on')); 
+    btn.classList.add('on');
+    
+    // Show/hide admin code field based on role
+    const adminCodeField = document.getElementById('loginAdminCodeField');
+    if (role === 'admin') {
+        adminCodeField.style.display = 'block';
+    } else {
+        adminCodeField.style.display = 'none';
+        // Clear the admin code field when switching away from admin
+        document.getElementById('loginAdminCode').value = '';
+    }
+}
+
+function setRegRole(role, element) {
+    currentRegRole = role;
+    
+    // Update tab styling
+    const tabs = document.querySelectorAll('#regTabs .tab-b');
+    tabs.forEach(tab => tab.classList.remove('on'));
+    element.classList.add('on');
+    
+    // Show/hide admin code field in registration
+    const adminCodeField = document.getElementById('adminCodeField');
+    if (role === 'admin') {
+        adminCodeField.style.display = 'block';
+    } else {
+        adminCodeField.style.display = 'none';
+        // Clear the admin code field
+        document.getElementById('regAdminCode').value = '';
+    }
+}
+
+function switchReg() { 
+    document.getElementById('authModal').classList.remove('open'); 
+    document.getElementById('regModal').classList.add('open'); 
+}
+
+function switchLogin() { 
+    document.getElementById('regModal').classList.remove('open'); 
+    document.getElementById('authModal').classList.add('open'); 
+}
+
+function doLogin() { 
+    const email = document.getElementById('loginEmail').value.trim(); 
+    const password = document.getElementById('loginPassword').value;
+    
+    // Check which tab is active
+    const activeTab = document.querySelector('#authTabs .tab-b.on');
+    const isAdminLogin = activeTab && activeTab.textContent.includes('Admin');
+    
+    // Basic validation
+    if (!email || !password) { 
+        showToast('<i class="fas fa-exclamation-circle"></i> Please enter email and password', 'error'); 
+        return;
+    }
+    
+    // If admin login, validate admin code
+    if (isAdminLogin) {
+        const adminCode = document.getElementById('loginAdminCode').value.trim();
+        if (!adminCode) {
+            showToast('<i class="fas fa-exclamation-circle"></i> Please enter admin code', 'error');
+            return;
+        }
+        // In production, verify this against your backend
+        // For demo, using a simple code
+        if (adminCode !== 'ADMIN123') {
+            showToast('<i class="fas fa-exclamation-circle"></i> Invalid admin code', 'error');
+            return;
+        }
+    }
+    
+    // Here you would typically make an API call to your backend
+    console.log('Login attempt:', { email, password, isAdminLogin, adminCode: isAdminLogin ? document.getElementById('loginAdminCode').value : undefined });
+    
+    closeAuth('authModal'); 
+    
+    // Customize welcome message based on user type
+    if (isAdminLogin) {
+        showToast('<i class="fas fa-check-circle"></i> Admin login successful! Welcome back to the admin dashboard.');
+    } else {
+        showToast('<i class="fas fa-check-circle"></i> Login successful! Welcome back.');
+    }
+}
+
+function validateRegistrationForm() {
+    let isValid = true;
+    
+    // Clear previous errors
+    document.querySelectorAll('#registrationForm .error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('#registrationForm .fg').forEach(el => el.classList.remove('error'));
+    
+    const firstName = document.getElementById('regFirstName').value.trim();
+    if (!firstName) {
+        document.getElementById('error-reg-firstName').textContent = 'First name is required';
+        document.getElementById('field-reg-firstName').classList.add('error');
+        isValid = false;
+    }
+    
+    const lastName = document.getElementById('regLastName').value.trim();
+    if (!lastName) {
+        document.getElementById('error-reg-lastName').textContent = 'Last name is required';
+        document.getElementById('field-reg-lastName').classList.add('error');
+        isValid = false;
+    }
+    
+    const email = document.getElementById('regEmail').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        document.getElementById('error-reg-email').textContent = 'Email is required';
+        document.getElementById('field-reg-email').classList.add('error');
+        isValid = false;
+    } else if (!emailRegex.test(email)) {
+        document.getElementById('error-reg-email').textContent = 'Please enter a valid email address';
+        document.getElementById('field-reg-email').classList.add('error');
+        isValid = false;
+    }
+    
+    const company = document.getElementById('regCompany').value.trim();
+    if (!company) {
+        document.getElementById('error-reg-company').textContent = 'Company is required';
+        document.getElementById('field-reg-company').classList.add('error');
+        isValid = false;
+    }
+    
+    const phone = document.getElementById('regPhone').value.trim();
+    if (!phone) {
+        document.getElementById('error-reg-phone').textContent = 'Phone is required';
+        document.getElementById('field-reg-phone').classList.add('error');
+        isValid = false;
+    }
+    
+    const password = document.getElementById('regPassword').value;
+    if (!password) {
+        document.getElementById('error-reg-password').textContent = 'Password is required';
+        document.getElementById('field-reg-password').classList.add('error');
+        isValid = false;
+    } else if (password.length < 6) {
+        document.getElementById('error-reg-password').textContent = 'Password must be at least 6 characters';
+        document.getElementById('field-reg-password').classList.add('error');
+        isValid = false;
+    }
+    
+    // Admin code validation for admin registration
+    if (currentRegRole === 'admin') {
+        const adminCode = document.getElementById('regAdminCode').value.trim();
+        if (!adminCode) {
+            document.getElementById('error-reg-adminCode').textContent = 'Admin code is required';
+            document.getElementById('adminCodeField').classList.add('error');
+            isValid = false;
+        } else if (adminCode !== 'ADMIN123') {
+            document.getElementById('error-reg-adminCode').textContent = 'Invalid admin code';
+            document.getElementById('adminCodeField').classList.add('error');
+            isValid = false;
+        }
+    }
+    
+    // Terms agreement
+    if (!document.getElementById('regTerms').checked) {
+        document.getElementById('error-reg-terms').textContent = 'You must agree to the terms';
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function doRegister() { 
+    if (!validateRegistrationForm()) {
+        showToast('<i class="fas fa-exclamation-circle"></i> Please fix the errors in the form', 'error');
+        return;
+    }
+    
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName = document.getElementById('regLastName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const company = document.getElementById('regCompany').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const role = currentRegRole;
+    const adminCode = role === 'admin' ? document.getElementById('regAdminCode').value.trim() : '';
+    
+    // Here you would typically make an API call to your backend
+    console.log('Registration attempt:', {
+        firstName,
+        lastName,
+        email,
+        company,
+        phone,
+        password,
+        role,
+        adminCode: role === 'admin' ? adminCode : undefined
+    });
+    
+    closeAuth('regModal');
+    
+    if (role === 'admin') {
+        showToast('<i class="fas fa-check-circle"></i> Admin account created successfully!');
+    } else {
+        showToast('<i class="fas fa-check-circle"></i> Account created successfully! Welcome to Nexus.');
+    }
+    
+    // Optionally open login modal after successful registration
+    setTimeout(() => {
+        document.getElementById('authModal').classList.add('open');
+    }, 1000);
+}
+
+function openPayModal() { 
+    document.getElementById('payModal').classList.add('open'); 
+}
+
+function selPay(el) { 
+    document.querySelectorAll('.pay-method').forEach(p => p.classList.remove('sel')); 
+    el.classList.add('sel'); 
+}
+
+function doPayment() { 
+    closeAuth('payModal'); 
+    showToast('<i class="fas fa-check-circle"></i> Payment successful! 🎉 Thank you for your purchase.'); 
+}
+
+// ======================== CHAT ========================
+function toggleChat() { 
+    document.getElementById('chatWindow').classList.toggle('open'); 
+}
+
+function chatQuick(msg) { 
+    addChatMsg(msg, 'user'); 
+    setTimeout(() => { 
+        let response = ''; 
+        if (msg.includes('service')) response = 'We offer Web Development, Digital Marketing, Business Consultancy, IT Consultancy, Career Guidance, and more!'; 
+        else if (msg.includes('pric')) response = 'Our plans start at $499/month (Starter), $1,499/month (Growth), and Custom for Enterprise.'; 
+        else if (msg.includes('book')) response = 'Please visit our Contact page to book a free consultation!'; 
+        else response = 'Thanks for your message! A team member will follow up shortly.'; 
+        addChatMsg(response, 'bot'); 
+    }, 800); 
+}
+
+function sendChat() { 
+    const inp = document.getElementById('chatInput'); 
+    const msg = inp.value.trim(); 
+    if (!msg) return; 
+    addChatMsg(msg, 'user'); 
+    inp.value = ''; 
+    setTimeout(() => addChatMsg('Thanks for your message! Our team will get back to you soon.', 'bot'), 800); 
+}
+
+function addChatMsg(text, type) { 
+    const body = document.getElementById('chatBody'); 
+    const div = document.createElement('div'); 
+    div.className = 'chat-msg ' + type; 
+    div.innerHTML = text; 
+    body.appendChild(div); 
+    body.scrollTop = body.scrollHeight; 
+}
+
+// ======================== NEWSLETTER ========================
+function subscribeNewsletter() { 
+    const email = document.getElementById('nlEmail'); 
+    if (email && email.value) { 
+        showToast('<i class="fas fa-check-circle"></i> You\'ve subscribed! Welcome to the Nexus community.'); 
+        email.value = ''; 
+    } else { 
+        showToast('<i class="fas fa-exclamation-circle"></i> Please enter your email address.', 'error'); 
+    } 
+}
+
+// ======================== DOWNLOAD ========================
+function downloadBrochure(name) { 
+    showToast(`<i class="fas fa-download"></i> Downloading "${name}"...`); 
+}
+
+// ======================== TOAST ========================
+function showToast(msg, type = 'success') { 
+    const t = document.createElement('div'); 
+    t.style.cssText = `position:fixed;bottom:90px;right:24px;background:${type === 'error' ? 'var(--red)' : 'var(--card2)'};border:1px solid ${type === 'error' ? 'rgba(239,68,68,.3)' : 'var(--gold-b)'};color:var(--white);padding:14px 20px;border-radius:10px;font-size:.86rem;z-index:3000;max-width:320px;line-height:1.5;animation:fadeUp .3s ease;box-shadow:0 8px 30px rgba(0,0,0,.5);`; 
+    t.innerHTML = msg; 
+    document.body.appendChild(t); 
+    setTimeout(() => { 
+        t.style.opacity = '0'; 
+        t.style.transform = 'translateY(10px)'; 
+        setTimeout(() => t.remove(), 300); 
+    }, 4000); 
+}
+
+// ======================== ANIMATION ========================
+function observeAnim() { 
+    const els = document.querySelectorAll('.anim:not(.vis)'); 
+    const obs = new IntersectionObserver((entries) => { 
+        entries.forEach((e, i) => { 
+            if (e.isIntersecting) { 
+                setTimeout(() => e.target.classList.add('vis'), i * 70); 
+                obs.unobserve(e.target); 
+            } 
+        }); 
+    }, { threshold: 0.08 }); 
+    els.forEach(el => obs.observe(el)); 
+}
+
+// ======================== NAV SCROLL FX ========================
+window.addEventListener('scroll', () => { 
+    const nav = document.getElementById('main-nav'); 
+    if (nav) nav.style.background = window.scrollY > 50 ? 'rgba(7,9,15,.98)' : 'rgba(7,9,15,.92)'; 
+});
+
+// ======================== MODAL OVERLAY CLOSE ========================
+document.querySelectorAll('.modal-overlay').forEach(m => { 
+    m.addEventListener('click', function(e) { 
+        if (e.target === this) this.classList.remove('open'); 
+    }); 
+});
+
+// ======================== INIT ========================
+document.addEventListener('DOMContentLoaded', () => { 
+    goPage('home'); 
+    observeAnim(); 
+    
+    // Initialize calendar with December 2025
+    currentMonth = 11; // December
+    currentYear = 2025;
+    generateCalendar();
+    
+    // Initialize file upload listener
+    document.getElementById('appResume')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const fileName = file.name;
+            document.getElementById('fileName').innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
+            document.getElementById('resumeLabel').innerHTML = 'Change Resume/CV';
+        }
+    });
+});
+</script>
+</body>
+</html>
